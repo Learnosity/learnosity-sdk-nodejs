@@ -1,0 +1,16 @@
+{
+  "name": "learnosity-sdk-nodejs",
+  "version": "0.3.0",
+  "description": "Learnosity NodeJS SDK",
+  "main": "index.js",
+  "keywords": [
+    "learnosity",
+    "sdk"
+  ],
+  "author": "Denis Hoctor",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "crypto-js": "^3.1.6",
+    "moment": "^2.13.0"
+  }
+}
