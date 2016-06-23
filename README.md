@@ -73,8 +73,9 @@ var request = Learnosity.init(
    }
 );
 
-?>
+```
 
+``` html
 // Pass the object to the initialisation of any Learnosity API, in this example the Questions API
 <script src="//questions.learnosity.com"></script>
 <script>
