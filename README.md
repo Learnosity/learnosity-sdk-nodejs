@@ -73,8 +73,9 @@ var request = Learnosity.init(
    }
 );
 
-?>
+```
 
+``` html
 // Pass the object to the initialisation of any Learnosity API, in this example the Questions API
 <script src="//questions.learnosity.com"></script>
 <script>
@@ -110,7 +111,7 @@ Your private key, as provided by Learnosity.
 **request**<br>
 An optional associative array^ of data relevant to the API being used. This will be any data minus the security details that you would normally use to initialise an API.
 
-^Note – the SDK accepts a JSON string and native PHP arrays.
+^Note – the SDK accepts a JSON string and normal Javascript objects.
 
 **action**<br>
 An optional string used only if integrating with the Data API. Valid options are:
