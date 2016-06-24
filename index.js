@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *--------------------------------------------------------------------------
  * Learnosity SDK - Init
@@ -8,204 +10,179 @@
  *
  */
 
+var _ = require('underscore');
 var sha256 = require('crypto-js/sha256');
 var moment = require('moment');
 
-var Learnosity = {
+/**
+ *
+ *
+ * @param requestPacket
+ * @returns string
+ */
+function convertRequestPacketToString(requestPacket) {
+    if (requestPacket && typeof requestPacket !== 'string') {
+        return JSON.stringify(requestPacket);
+    } else {
+        return requestPacket;
+    }
+}
 
-    /**
-     * Most services add the request packet (if passed) to the signature
-     * for security reasons. This flag can override that behaviour for
-     * services that don't require this.
-     * @var boolean
-     */
-    signRequestData: true,
-    /**
-     * Keynames that are valid in the securityPacket, they are also in
-     * the correct order for signature generation.
-     * @var string[]
-     */
-    validSecurityKeys: ['consumer_key', 'domain', 'timestamp', 'user_id'],
-
-    /**
-     * Service names that are valid for `service`
-     * @var string[]
-     */
-    validServices: ['assess', 'author', 'items', 'questions', 'reports'],
-
-    /**
-     * @see https://docs.learnosity.com/ For more information
-     *
-     * @param service
-     * @param securityPacket
-     * @param secret
-     * @param requestPacket
-     * @param action
-     *
-     * @returns {*} The init options for a Learnosity API
-     */
-    init: function(service, securityPacket, secret, requestPacket, action) {
-
-        if (!securityPacket.timestamp) {
-            securityPacket.timestamp = this.helper.timestamp();
+/**
+ * The API for calling assess mixes the security and request parameters.
+ * This function splits them back out.
+ *
+ * @param requestPacket    requestPacket is mutated as a result.
+ * @param securityPacket
+ * @param secret
+ */
+function extractQuestionsApiActivity(requestPacket, securityPacket, secret) {
+    if (requestPacket.questionsApiActivity) {
+        var questionsApi = requestPacket.questionsApiActivity;
+        var domain = 'assess.learnosity.com';
+        if (securityPacket.domain) {
+            domain = securityPacket.domain;
+        } else if (questionsApi.domain) {
+            domain = questionsApi.domain;
         }
 
-        this.service = service;
-        this.securityPacket = securityPacket;
-        this.secret = secret;
-        if (requestPacket) {
-            this.requestPacket = requestPacket;
-            this.requestString = typeof requestPacket == 'string' ? requestPacket : JSON.stringify(requestPacket);
-        }
-        this.action = action;
+        requestPacket.questionsApiActivity = {
+            'consumer_key': securityPacket.consumer_key,
+            'timestamp': securityPacket.timestamp,
+            'user_id': securityPacket.user_id,
+            'signature': hashSignatureArray([
+                securityPacket.consumer_key,
+                domain,
+                securityPacket.timestamp,
+                securityPacket.user_id,
+                secret
+            ])
+        };
 
-        // Set any service specific options
-        this.setServiceOptions(this.securityPacket, this.requestPacket, this.service, this.secret);
+        delete questionsApi.consumer_key;
+        delete questionsApi.domain;
+        delete questionsApi.timestamp;
+        delete questionsApi.user_id;
+        delete questionsApi.signature;
 
-        // Generate the signature based on the arguments provided
-        this.securityPacket.signature = this.generateSignature();
+        requestPacket.questionsApiActivity =
+            requestPacket.questionsApiActivity.concat(questionsApi);
+    }
+}
 
-        //NOTE: if we support { 'security': {}, 'request': {} } this goes away!
-        var output;
-        if(this.service == 'questions') {
-            output = this.helper.extend(this.securityPacket, this.requestPacket);
-        } else {
-            output = {
-                'security': this.securityPacket,
-                'request': this.requestPacket
-            };
-        }
+/**
+ * Creates the signature hash.
+ *
+ * @param service        string
+ * @param securityPacket object
+ * @param secret         string
+ * @param requestString  string
+ * @param action         object
+ */
+function generateSignature(
+    service,
+    securityPacket,
+    secret,
+    requestString,
+    action
+) {
+    var signatureArray = [
+        securityPacket.consumer_key,
+        securityPacket.domain,
+        securityPacket.timestamp,
+        securityPacket.user_id,
+        secret
+    ];
 
-        return output;
-    },
+    // Add the requestPacket if necessary
+    var signRequestData = !(service === 'assess' && service === 'questions');
+    if (signRequestData && requestString && requestString.length > 0) {
+        signatureArray.push(requestString);
+    }
 
-    /**
-     * Generate a signature hash for the request, this includes:
-     *  - the security credentials
-     *  - the `request` packet (a JSON string) if passed
-     *  - the `action` value if passed
-     *
-     * @return string A signature hash for the request authentication
-     */
-    generateSignature: function() {
-        var self = this;
-        var signatureArray = [];
+    // Add the action if necessary
+    if (action && action.length > 0) {
+        signatureArray.push(action);
+    }
 
-        // Create a pre-hash string based on the security credentials
-        // The order is important
-        this.validSecurityKeys.forEach(function(key) {
-            if (self.securityPacket[key]) {
-                signatureArray.push(self.securityPacket[key]);
-            }
-        });
+    return hashSignatureArray(signatureArray);
+}
 
-        // Add the secret
-        signatureArray.push(this.secret);
+/**
+ * Joins an array (with '_') and hashes it.
+ *
+ * @param signatureArray array
+ * @returns string
+ */
+function hashSignatureArray(signatureArray) {
+    return sha256(signatureArray.join('_')).toString();
+}
 
-        // Add the requestPacket if necessary
-        if (this.signRequestData && this.requestString && this.requestString.length > 0) {
-            signatureArray.push(this.requestString);
-        }
+/**
+ * @constructor
+ */
+function LearnositySDK() {}
 
-        // Add the action if necessary
-        if (this.action && this.action.length > 0) {
-            signatureArray.push(this.action);
-        }
+/**
+ * @see https://docs.learnosity.com/ For more information
+ *
+ * @param service        string
+ * @param securityPacket object
+ * @param secret         string
+ * @param requestPacket  object
+ * @param action         object
+ *
+ * @returns object The init options for a Learnosity API
+ */
+LearnositySDK.init = function (
+    service,
+    securityPacket,
+    secret,
+    requestPacket,
+    action
+) {
+    // requestPacket can be passed in as an object or as an already encoded
+    // string.
+    var requestString = convertRequestPacketToString(requestPacket);
 
-        return this.hashValue(signatureArray);
-    },
+    // Automatically timestamp the security packet
+    if (!securityPacket.timestamp) {
+        securityPacket.timestamp = moment().utc().format('YYYYMMDD-HHmm');
+    }
 
-    /**
-     * Hash an array value
-     *
-     * @param  value string[]  An array to hash
-     *
-     * @return string The hashed string
-     */
-    hashValue: function(value) {
-        return sha256(value.join('_')).toString();
-    },
+    if (service === 'assess') {
+        extractQuestionsApiActivity(requestPacket, securityPacket, secret);
+    }
 
-    /**
-     * Set any options for services that aren't generic
-     */
-    setServiceOptions: function(security, request, service, secret) {
-        switch (this.service) {
-            case 'assess':
-            case 'questions':
-                this.signRequestData = false;
-                // The Assess API holds data for the Questions API that includes
-                // security information and a signature. Retrieve the security
-                // information from this and generate a signature for the
-                // Questions API
-                if (this.service === 'assess' && request.questionsApiActivity) {
-                    var questionsApi = request.questionsApiActivity;
-                    var domain = 'assess.learnosity.com';
-                    if (security.domain) {
-                        domain = security.domain;
-                    } else if (questionsApi.domain) {
-                        domain = questionsApi.domain;
-                    }
-
-                    request.questionsApiActivity = {
-                        'consumer_key': security.consumer_key,
-                        'timestamp': security.timestamp,
-                        'user_id': security.user_id,
-                        'signature': this.hashValue(
-                            {
-                                'consumer_key': security.consumer_key,
-                                'domain': domain,
-                                'timestamp': security.timestamp,
-                                'user_id': security.user_id,
-                                'secret': secret
-                            }
-                        )
-                    };
-
-                    delete questionsApi.consumer_key;
-                    delete questionsApi.domain;
-                    delete questionsApi.timestamp;
-                    delete questionsApi.user_id;
-                    delete questionsApi.signature;
-
-                    request.questionsApiActivity = request.questionsApiActivity.concat(questionsApi);
-                }
-                break;
-            case 'author':
-            case 'data':
-            case 'items':
-            case 'reports':
-                // The Events API requires a user_id, so we make sure it's a part
-                // of the security packet as we share the signature in some cases
-                if (!security.user_id && request && request.user_id) {
-                    this.securityPacket.user_id = request.user_id;
-                }
-
-                break;
-            default:
-                // do nothing
-                break;
-        }
-    },
-
-    helper: {
-        timestamp: function() {
-            var now = new Date(Date.now()),
-                date = new Date(now.valueOf() + now.getTimezoneOffset() * 60000);
-
-            return moment(date).format('YYYYMMDD-HHmm');
-        },
-
-        extend: function(a, b) {
-            for(var key in b) {
-                if(b.hasOwnProperty(key)) {
-                    a[key] = b[key];
-                }
-            }
-            return a;
+    // Automatically populate the user_id of the security packet.
+    if (_.contains(['author', 'data', 'items', 'reports'], service)) {
+        // The Events API requires a user_id, so we make sure it's a part
+        // of the security packet as we share the signature in some cases
+        if (!securityPacket.user_id && requestPacket && requestPacket.user_id) {
+            securityPacket.user_id = requestPacket.user_id;
         }
     }
 
+    // Generate the signature based on the arguments provided
+    securityPacket.signature = generateSignature(
+        service,
+        securityPacket,
+        secret,
+        requestString,
+        action
+    );
+
+    var output;
+    if (service === 'questions') {
+        output = _.extend(securityPacket, requestPacket);
+    } else {
+        output = {
+            'security': securityPacket,
+            'request': requestPacket
+        };
+    }
+
+    return output;
 };
 
-module.exports = Learnosity;
+module.exports = LearnositySDK;
