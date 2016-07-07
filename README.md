@@ -1,4 +1,6 @@
-# Learnosity SDK - NodeJS
+# BETA Learnosity SDK - NodeJS
+
+The package is currently in BETA and hasn't been fully tested for production use. Certain features found in the PHP SDK aren't fully supported.
 
 Include this package into your own codebase to ease integration with any of the Learnosity APIs.
 
