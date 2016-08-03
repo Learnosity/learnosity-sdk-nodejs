@@ -8,7 +8,11 @@ Include this package into your own codebase to ease integration with any of the 
 
 ### NPM
 
-Installation via NPM is comming soon
+	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs
+
+To install from [a tag](https://github.com/Learnosity/learnosity-sdk-nodejs/releases):
+
+	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs@0.3.0
 
 ### git clone
 
