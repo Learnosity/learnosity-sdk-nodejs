@@ -12,7 +12,7 @@ Include this package into your own codebase to ease integration with any of the 
 
 To install from [a tag](https://github.com/Learnosity/learnosity-sdk-nodejs/releases):
 
-	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs@0.3.0
+	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs@v0.3.0
 
 ### git clone
 
