@@ -95,7 +95,7 @@ function generateSignature(
     ];
 
     // Add the requestPacket if necessary
-    var signRequestData = !(service === 'assess' && service === 'questions');
+    var signRequestData = !(service === 'assess' || service === 'questions');
     if (signRequestData && requestString && requestString.length > 0) {
         signatureArray.push(requestString);
     }
