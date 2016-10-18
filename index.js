@@ -175,17 +175,21 @@ LearnositySDK.init = function (
     );
 
     var output;
-    if (service === 'questions') {
+    if(service === 'data') {
+         output = {
+            'security': JSON.stringify(securityPacket),
+            'request': JSON.stringify(requestPacket),
+            'action': action
+        };
+    } 
+    else if (service === 'questions') {
         output = _.extend(securityPacket, requestPacket);
-    } else {
+    } 
+    else {
         output = {
             'security': securityPacket,
             'request': requestPacket
         };
-    }
-
-    if(service==='data') {
-        output.action = action;
     }
 
     return output;
