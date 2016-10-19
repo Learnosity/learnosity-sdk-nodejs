@@ -90,10 +90,10 @@ function generateSignature(
         securityPacket.consumer_key,
         securityPacket.domain,
         securityPacket.timestamp
-	];
-	if(securityPacket.user_id) {
-		signatureArray.push(securityPacket.user_id);
-	}
+    ];
+    if(securityPacket.user_id) {
+        signatureArray.push(securityPacket.user_id);
+    }
     signatureArray.push(secret);
 
     // Add the requestPacket if necessary
@@ -181,11 +181,9 @@ LearnositySDK.init = function (
             'request': JSON.stringify(requestPacket),
             'action': action
         };
-    } 
-    else if (service === 'questions') {
+    } else if (service === 'questions') {
         output = _.extend(securityPacket, requestPacket);
-    } 
-    else {
+    } else {
         output = {
             'security': securityPacket,
             'request': requestPacket
