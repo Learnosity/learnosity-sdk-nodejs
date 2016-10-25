@@ -136,7 +136,7 @@ function LearnositySDK() {}
  *
  * @returns object The init options for a Learnosity API
  */
-LearnositySDK.init = function (
+LearnositySDK.prototype.init = function (
     service,
     securityPacket,
     secret,
