@@ -50,8 +50,11 @@ The init function takes up to 5 arguments:
 ``` javascript
 var Learnosity = require('learnosity-sdk-nodejs');
 
-// Instantiate the SDK Init class with your security and request data:
-var request = Learnosity.init(
+// Instantiate the SDK
+var learnositySdk = new Learnosity();
+
+// Generate a Learnosity API initialization packet
+var request = learnositySdk.init(
    'questions',
    {
        'consumer_key': 'yis0TYCu7U9V4o7M',
