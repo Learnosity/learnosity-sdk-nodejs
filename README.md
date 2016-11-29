@@ -107,8 +107,8 @@ A string representing the Learnosity service (API) you want to integrate with. V
 **security**<br>
 An array^ that includes your *consumer_key* but does not include your *secret*. The SDK sets defaults for you, but valid options are:
 
-* consumer_key
-* domain (optional - defaults to *localhost*)
+* consumer_key (mandatory)
+* domain (mandatory)
 * timestamp (optional - the SDK will generate this for you)
 * user_id (optional - not necessary for all APIs)
 
