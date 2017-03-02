@@ -29,14 +29,13 @@ function convertRequestPacketToString(requestPacket) {
 }
 
 /**
- * The API for calling assess mixes the security and request parameters.
- * This function splits them back out.
+ * Insert security information into assess request object
  *
  * @param requestPacket    requestPacket is mutated as a result.
  * @param securityPacket
  * @param secret
  */
-function extractQuestionsApiActivity(requestPacket, securityPacket, secret) {
+function insertSecurityInformationToAssessObject(requestPacket, securityPacket, secret) {
     if (requestPacket.questionsApiActivity) {
         var questionsApi = requestPacket.questionsApiActivity;
         var domain = 'assess.learnosity.com';
@@ -46,27 +45,16 @@ function extractQuestionsApiActivity(requestPacket, securityPacket, secret) {
             domain = questionsApi.domain;
         }
 
-        requestPacket.questionsApiActivity = {
-            'consumer_key': securityPacket.consumer_key,
-            'timestamp': securityPacket.timestamp,
-            'user_id': securityPacket.user_id,
-            'signature': hashSignatureArray([
-                securityPacket.consumer_key,
-                domain,
-                securityPacket.timestamp,
-                securityPacket.user_id,
-                secret
-            ])
-        };
-
-        delete questionsApi.consumer_key;
-        delete questionsApi.domain;
-        delete questionsApi.timestamp;
-        delete questionsApi.user_id;
-        delete questionsApi.signature;
-
-        requestPacket.questionsApiActivity =
-            requestPacket.questionsApiActivity.concat(questionsApi);
+        requestPacket.questionsApiActivity.consumer_key = securityPacket.consumer_key;
+        requestPacket.questionsApiActivity.timestamp = securityPacket.timestamp;
+        requestPacket.questionsApiActivity.user_id = securityPacket.user_id;
+        requestPacket.questionsApiActivity.signature = hashSignatureArray([
+            securityPacket.consumer_key,
+            domain,
+            securityPacket.timestamp,
+            securityPacket.user_id,
+            secret
+        ]);
     }
 }
 
@@ -153,7 +141,7 @@ LearnositySDK.prototype.init = function (
     }
 
     if (service === 'assess') {
-        extractQuestionsApiActivity(requestPacket, securityPacket, secret);
+        insertSecurityInformationToAssessObject(requestPacket, securityPacket, secret);
     }
 
     // Automatically populate the user_id of the security packet.
@@ -183,6 +171,8 @@ LearnositySDK.prototype.init = function (
         };
     } else if (service === 'questions') {
         output = _.extend(securityPacket, requestPacket);
+    } else if (service === 'assess') {
+        output = requestPacket;
     } else {
         output = {
             'security': securityPacket,
