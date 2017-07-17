@@ -73,9 +73,8 @@ var request = learnositySdk.init(
                "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
                "possible_responses":  ["Australia", "France", "Ireland", "England"],
                "validation": {
-                   "valid_responses": {
-                       ["England"], ["Ireland"], ["France"], ["Australia"]
-                   }
+                   "score": 1,
+                   "value": ["England", "Ireland", "France", "Australia"]
                }
            }
        ]
