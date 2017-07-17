@@ -55,26 +55,26 @@ var learnositySdk = new Learnosity();
 
 // Generate a Learnosity API initialization packet
 var request = learnositySdk.init(
-   'questions',
+   "questions",
    {
-       'consumer_key': 'yis0TYCu7U9V4o7M',
-       'domain':       'localhost',
-       'user_id':      'demo_student'
+       "consumer_key": "yis0TYCu7U9V4o7M",
+       "domain":       "localhost",
+       "user_id":      "demo_student"
    },
-   'superfragilisticexpialidocious',
+   "superfragilisticexpialidocious",
    {
-       'type':       'local_practice',
-       'state':      'initial',
-       'questions':  [
+       "type":       "local_practice",
+       "state":      "initial",
+       "questions":  [
            {
-               'response_id':         '60005',
-               'type':                'association',
-               'stimulus':            'Match the cities to the parent nation.',
-               'stimulus_list':       ['London', 'Dublin', 'Paris', 'Sydney'],
-               'possible_responses':  ['Australia', 'France', 'Ireland', 'England'],
-               'validation': {
-                   'valid_responses': {
-                       ['England'], ['Ireland'], ['France'], ['Australia']
+               "response_id":         "60005",
+               "type":                "association",
+               "stimulus":            "Match the cities to the parent nation.",
+               "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
+               "possible_responses":  ["Australia", "France", "Ireland", "England"],
+               "validation": {
+                   "valid_responses": {
+                       ["England"], ["Ireland"], ["France"], ["Australia"]
                    }
                }
            }
