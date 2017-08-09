@@ -145,7 +145,7 @@ LearnositySDK.prototype.init = function (
     }
 
     // Automatically populate the user_id of the security packet.
-    if (_.contains(['author', 'data', 'items', 'reports'], service)) {
+    if (_.contains(['author', 'items', 'reports'], service)) {
         // The Events API requires a user_id, so we make sure it's a part
         // of the security packet as we share the signature in some cases
         if (!securityPacket.user_id && requestPacket && requestPacket.user_id) {
