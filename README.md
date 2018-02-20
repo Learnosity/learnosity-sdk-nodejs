@@ -50,8 +50,9 @@ The init function takes up to 5 arguments:
 ```
 Structure of Node.js project (based on Express.js and EJS template):
 - node_modules
------ learnosity-sdk-nodejs
 ----- ejs 
+----- express 
+----- learnosity-sdk-nodejs
 ----- (all standard modules)
 - views
 ----- index.ejs
@@ -110,10 +111,22 @@ app.listen(3000, function () {
 index.ejs:
 
 // Pass the object to the initialisation of any Learnosity API, in this example the Questions API
-<script src="//questions.learnosity.com"></script>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - NodeJS</title>
+</head>
+<body>
+<span class="learnosity-response question-60005"></span>
+<script src="//questions.learnosity.com/?v2"></script>
 <script>
-    var questionsApp = LearnosityApp.init( {{ JSON.encode(request) }} );
+	var request = <%- JSON.stringify(request) %>
+	console.log(request);
+    var questionsApp = LearnosityApp.init(request);
 </script>
+</body>
+</html>
 ```
 
 ``` json
