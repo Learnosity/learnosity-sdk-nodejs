@@ -47,21 +47,38 @@ The init function takes up to 5 arguments:
  * [request] request details *(optional)*
  * [string]  action *(optional)*
 
+```
+Structure of Node.js project (based on Express.js and EJS template):
+- node_modules
+----- learnosity-sdk-nodejs
+----- ejs 
+----- (all standard modules)
+- views
+----- index.ejs
+- package.json
+- package-lock.json
+- app.js
+```
+
 ``` javascript
+app.js:
+
 var Learnosity = require('learnosity-sdk-nodejs');
+var express = require('express');
+var app = express();
 
-// Instantiate the SDK
-var learnositySdk = new Learnosity();
+app.set('view engine', 'ejs');
 
-// Generate a Learnosity API initialization packet
-var request = learnositySdk.init(
+app.get('/', function (req, res) {
+  var learnositySdk = new Learnosity();
+  var request = learnositySdk.init(
    "questions",
    {
        "consumer_key": "yis0TYCu7U9V4o7M",
        "domain":       "localhost",
        "user_id":      "demo_student"
    },
-   "superfragilisticexpialidocious",
+   "74c5fd430cf1242a527f6223aebd42d30464be22",
    {
        "type":       "local_practice",
        "state":      "initial",
@@ -79,16 +96,45 @@ var request = learnositySdk.init(
            }
        ]
    }
-);
+  );
 
+  res.render("index", { request: request } );
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
 ```
 
 ``` html
+index.ejs:
+
 // Pass the object to the initialisation of any Learnosity API, in this example the Questions API
 <script src="//questions.learnosity.com"></script>
 <script>
     var questionsApp = LearnosityApp.init( {{ JSON.encode(request) }} );
 </script>
+```
+
+``` json
+package.json:
+
+{
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "Test NodeJS sdk",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "learnosity-sdk-nodejs": "git+https://github.com/Learnosity/learnosity-sdk-nodejs.git#v0.4.1"
+  }
+}
 ```
 
 #### Init() Arguments
