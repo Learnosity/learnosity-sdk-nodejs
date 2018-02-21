@@ -150,6 +150,11 @@ package.json:
 }
 ```
 
+```
+run node.js application: node app.js
+check browser: http://localhost:3000/
+```
+
 #### Init() Arguments
 **service**<br>
 A string representing the Learnosity service (API) you want to integrate with. Valid options are:
