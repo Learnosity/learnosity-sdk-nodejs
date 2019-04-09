@@ -13,10 +13,11 @@
 var _ = require('underscore');
 var sha256 = require('crypto-js/sha256');
 var moment = require('moment');
+var os = require('os');
+var moduleInfo = require('./package.json');
 
 /**
  *  Converts the request packet into an object if it is passed as a string
- *
  *
  * @param requestPacket
  * @returns object
@@ -27,6 +28,25 @@ function convertRequestPacketToObject(requestPacket) {
     } else {
         return requestPacket;
     }
+}
+
+var sdkMeta = {
+    version: 'v' + moduleInfo.version,
+    lang: 'node.js',
+    lang_version: process.version,
+    platform: os.platform(),
+    platform_version: os.release()
+};
+function addTelemetryData(requestObject) {
+    if (requestObject && requestObject.meta) {
+        requestObject.meta.sdk = sdkMeta;
+    } else if (requestObject) {
+        requestObject.meta = {
+            sdk: sdkMeta
+        };
+    }
+
+    return requestObject
 }
 
 /**
@@ -113,9 +133,30 @@ function hashSignatureArray(signatureArray) {
  * @constructor
  */
 function LearnositySDK() {}
+var telemetryEnabled = true;
 
 /**
- * @see https://docs.learnosity.com/ For more information
+ * Enables telemetry.
+ *
+ * Telemetry is enabled by default. We use it to enable better support and feature planning.
+ * It is however not advised to disable it, and it will not interfere with any usage.
+ */
+LearnositySDK.enableTelemetry = function () {
+    telemetryEnabled = true;
+};
+
+/**
+ * Disables telemetry.
+ *
+ * We use telemetry to enable better support and feature planning. It is therefore not advised to
+ * disable it, because it will not interfere with any usage.
+ */
+LearnositySDK.disableTelemetry = function () {
+    telemetryEnabled = false;
+};
+
+/**
+ * @see https://github.com/Learnosity/learnosity-sdk-nodejs For more information
  *
  * @param service        string
  * @param securityPacket object
@@ -135,6 +176,10 @@ LearnositySDK.prototype.init = function (
     // requestPacket can be passed in as an object or as an already encoded
     // string.
     var requestObject = convertRequestPacketToObject(requestPacket);
+
+    if (telemetryEnabled) {
+        addTelemetryData(requestObject);
+    }
 
     // Automatically timestamp the security packet
     if (!securityPacket.timestamp) {
