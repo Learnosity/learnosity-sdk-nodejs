@@ -1,0 +1,39 @@
+{
+    "type": "local_practice",
+    "state": "initial",
+    "questions": [
+        {
+            "response_id": "60005",
+            "type": "association",
+            "stimulus": "Match the cities to the parent nation.",
+            "stimulus_list": [
+                "London",
+                "Dublin",
+                "Paris",
+                "Sydney"
+            ],
+            "possible_responses": [
+                "Australia",
+                "France",
+                "Ireland",
+                "England"
+            ],
+            "validation": {
+                "valid_responses": [
+                    [
+                        "England"
+                    ],
+                    [
+                        "Ireland"
+                    ],
+                    [
+                        "France"
+                    ],
+                    [
+                        "Australia"
+                    ]
+                ]
+            }
+        }
+    ]
+}

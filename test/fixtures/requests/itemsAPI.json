@@ -1,0 +1,27 @@
+{
+    "user_id": "demo_student",
+    "rendering_type": "assess",
+    "name": "Items API demo - assess activity demo",
+    "state": "initial",
+    "activity_id": "items_assess_demo",
+    "session_id": "demo_session_uuid",
+    "type": "submit_practice",
+    "config": {
+        "configuration": {
+            "responsive_regions": true
+        },
+        "navigation": {
+            "scrolling_indicator": true
+        },
+        "regions": "main",
+        "time": {
+            "show_pause": true,
+            "max_time": 300
+        },
+        "title": "ItemsAPI Assess Isolation Demo",
+        "subtitle": "Testing Subtitle Text"
+    },
+    "items": [
+        "Demo3"
+    ]
+}

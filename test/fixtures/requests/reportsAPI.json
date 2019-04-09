@@ -1,0 +1,12 @@
+{
+    "reports": [
+        {
+            "id": "report-1",
+            "type": "sessions-summary",
+            "user_id": "brianmoser",
+            "session_ids": [
+                "AC023456-2C73-44DC-82DA28894FCBC3BF"
+            ]
+        }
+    ]
+}
