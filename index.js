@@ -13,19 +13,40 @@
 var _ = require('underscore');
 var sha256 = require('crypto-js/sha256');
 var moment = require('moment');
+var os = require('os');
+var moduleInfo = require('./package.json');
 
 /**
- *
+ *  Converts the request packet into an object if it is passed as a string
  *
  * @param requestPacket
- * @returns string
+ * @returns object
  */
-function convertRequestPacketToString(requestPacket) {
-    if (requestPacket && typeof requestPacket !== 'string') {
-        return JSON.stringify(requestPacket);
+function convertRequestPacketToObject(requestPacket) {
+    if (_.isString(requestPacket)) {
+        return JSON.parse(requestPacket);
     } else {
         return requestPacket;
     }
+}
+
+var sdkMeta = {
+    version: 'v' + moduleInfo.version,
+    lang: 'node.js',
+    lang_version: process.version,
+    platform: os.platform(),
+    platform_version: os.release()
+};
+function addTelemetryData(requestObject) {
+    if (requestObject && requestObject.meta) {
+        requestObject.meta.sdk = sdkMeta;
+    } else if (requestObject) {
+        requestObject.meta = {
+            sdk: sdkMeta
+        };
+    }
+
+    return requestObject
 }
 
 /**
@@ -112,9 +133,30 @@ function hashSignatureArray(signatureArray) {
  * @constructor
  */
 function LearnositySDK() {}
+var telemetryEnabled = true;
 
 /**
- * @see https://docs.learnosity.com/ For more information
+ * Enables telemetry.
+ *
+ * Telemetry is enabled by default. We use it to enable better support and feature planning.
+ * It is however not advised to disable it, and it will not interfere with any usage.
+ */
+LearnositySDK.enableTelemetry = function () {
+    telemetryEnabled = true;
+};
+
+/**
+ * Disables telemetry.
+ *
+ * We use telemetry to enable better support and feature planning. It is therefore not advised to
+ * disable it, because it will not interfere with any usage.
+ */
+LearnositySDK.disableTelemetry = function () {
+    telemetryEnabled = false;
+};
+
+/**
+ * @see https://github.com/Learnosity/learnosity-sdk-nodejs For more information
  *
  * @param service        string
  * @param securityPacket object
@@ -133,7 +175,11 @@ LearnositySDK.prototype.init = function (
 ) {
     // requestPacket can be passed in as an object or as an already encoded
     // string.
-    var requestString = convertRequestPacketToString(requestPacket);
+    var requestObject = convertRequestPacketToObject(requestPacket);
+
+    if (telemetryEnabled) {
+        addTelemetryData(requestObject);
+    }
 
     // Automatically timestamp the security packet
     if (!securityPacket.timestamp) {
@@ -141,17 +187,19 @@ LearnositySDK.prototype.init = function (
     }
 
     if (service === 'assess') {
-        insertSecurityInformationToAssessObject(requestPacket, securityPacket, secret);
+        insertSecurityInformationToAssessObject(requestObject, securityPacket, secret);
     }
 
     // Automatically populate the user_id of the security packet.
     if (_.contains(['author', 'items', 'reports'], service)) {
         // The Events API requires a user_id, so we make sure it's a part
         // of the security packet as we share the signature in some cases
-        if (!securityPacket.user_id && requestPacket && requestPacket.user_id) {
-            securityPacket.user_id = requestPacket.user_id;
+        if (!securityPacket.user_id && requestObject && requestObject.user_id) {
+            securityPacket.user_id = requestObject.user_id;
         }
     }
+
+    var requestString = JSON.stringify(requestObject);
 
     // Generate the signature based on the arguments provided
     securityPacket.signature = generateSignature(
@@ -166,17 +214,20 @@ LearnositySDK.prototype.init = function (
     if(service === 'data') {
          output = {
             'security': JSON.stringify(securityPacket),
-            'request': JSON.stringify(requestPacket),
+            'request': requestString,
             'action': action
         };
     } else if (service === 'questions') {
-        output = _.extend(securityPacket, requestPacket);
+        // Questions API Requests don't need `domain`
+        delete securityPacket.domain;
+
+        output = _.extend(securityPacket, requestObject);
     } else if (service === 'assess') {
-        output = requestPacket;
+        output = requestObject;
     } else {
         output = {
             'security': securityPacket,
-            'request': requestPacket
+            'request': _.isString(requestPacket) ? requestString : requestObject
         };
     }
 

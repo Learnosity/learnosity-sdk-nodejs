@@ -1,17 +1,23 @@
 {
   "name": "learnosity-sdk-nodejs",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Learnosity NodeJS SDK",
   "main": "index.js",
   "keywords": [
     "learnosity",
     "sdk"
   ],
-  "author": "Denis Hoctor",
+  "author": "Learnosity",
   "license": "Apache-2.0",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "crypto-js": "^3.1.6",
     "moment": "^2.13.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "mocha": "^6.1.1"
   }
 }

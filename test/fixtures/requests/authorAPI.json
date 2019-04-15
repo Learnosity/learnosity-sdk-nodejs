@@ -1,0 +1,15 @@
+{
+    "mode": "item_list",
+    "config": {
+        "item_list": {
+            "item": {
+                "status": true
+            }
+        }
+    },
+    "user": {
+        "id": "walterwhite",
+        "firstname": "walter",
+        "lastname": "white"
+    }
+}

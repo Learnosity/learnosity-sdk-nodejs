@@ -1,8 +1,8 @@
-# BETA Learnosity SDK - NodeJS
+# Learnosity SDK - NodeJS
 
-The package is currently in BETA and hasn't been fully tested for production use. Certain features found in the PHP SDK aren't fully supported.
+Include this package into your own codebase to ease integration with the Learnosity APIs.
 
-Include this package into your own codebase to ease integration with any of the Learnosity APIs.
+**Note:** This SDK version only supports signing pre-written requests and does not provide any interface for sending the actual HTTP requests.
 
 ## Installation
 
@@ -12,7 +12,7 @@ Include this package into your own codebase to ease integration with any of the 
 
 To install from [a tag](https://github.com/Learnosity/learnosity-sdk-nodejs/releases):
 
-	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs#v0.4.1
+	npm install [--save|--save-dev] https://github.com/Learnosity/learnosity-sdk-nodejs#v0.5.0
 
 ### git clone
 
@@ -71,39 +71,46 @@ var app = express();
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  var learnositySdk = new Learnosity();
-  var request = learnositySdk.init(
-   "questions",
-   {
-       "consumer_key": "yis0TYCu7U9V4o7M",
-       "domain":       "localhost",
-       "user_id":      "demo_student"
-   },
-   "74c5fd430cf1242a527f6223aebd42d30464be22",
-   {
-       "type":       "local_practice",
-       "state":      "initial",
-       "questions":  [
-           {
-               "response_id":         "60005",
-               "type":                "association",
-               "stimulus":            "Match the cities to the parent nation.",
-               "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
-               "possible_responses":  ["Australia", "France", "Ireland", "England"],
-               "validation": {
-                   "score": 1,
-                   "value": ["England", "Ireland", "France", "Australia"]
-               }
-           }
-       ]
-   }
-  );
+    var learnositySdk = new Learnosity();
+    var request = learnositySdk.init(
+        // service type
+        "questions", 
 
-  res.render("index", { request: request } );
+        // security details
+        {
+            "consumer_key": "yis0TYCu7U9V4o7M",
+            "domain":       "localhost",
+            "user_id":      "demo_student"
+        },
+
+        // secret
+        "74c5fd430cf1242a527f6223aebd42d30464be22",
+
+        // request details
+        {
+            "type":       "local_practice",
+            "state":      "initial",
+            "questions":  [
+                {
+                    "response_id":         "60005",
+                    "type":                "association",
+                    "stimulus":            "Match the cities to the parent nation.",
+                    "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
+                    "possible_responses":  ["Australia", "France", "Ireland", "England"],
+                    "validation": {
+                    "score": 1,
+                        "value": ["England", "Ireland", "France", "Australia"]
+                    }
+                }
+            ]
+        }
+    );
+
+    res.render("index", { request: request } );
 });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+    console.log('Example app listening on port 3000!');
 });
 ```
 
