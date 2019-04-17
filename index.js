@@ -37,6 +37,7 @@ var sdkMeta = {
     platform: os.platform(),
     platform_version: os.release()
 };
+
 function addTelemetryData(requestObject) {
     if (requestObject && requestObject.meta) {
         requestObject.meta.sdk = sdkMeta;
@@ -46,7 +47,7 @@ function addTelemetryData(requestObject) {
         };
     }
 
-    return requestObject
+    return requestObject;
 }
 
 /**
@@ -60,6 +61,7 @@ function insertSecurityInformationToAssessObject(requestPacket, securityPacket, 
     if (requestPacket.questionsApiActivity) {
         var questionsApi = requestPacket.questionsApiActivity;
         var domain = 'assess.learnosity.com';
+
         if (securityPacket.domain) {
             domain = securityPacket.domain;
         } else if (questionsApi.domain) {
@@ -100,13 +102,15 @@ function generateSignature(
         securityPacket.domain,
         securityPacket.timestamp
     ];
-    if(securityPacket.user_id) {
+
+    if (securityPacket.user_id) {
         signatureArray.push(securityPacket.user_id);
     }
     signatureArray.push(secret);
 
     // Add the requestPacket if necessary
     var signRequestData = !(service === 'assess' || service === 'questions');
+
     if (signRequestData && requestString && requestString.length > 0) {
         signatureArray.push(requestString);
     }
@@ -211,8 +215,9 @@ LearnositySDK.prototype.init = function (
     );
 
     var output;
-    if(service === 'data') {
-         output = {
+
+    if (service === 'data') {
+        output = {
             'security': JSON.stringify(securityPacket),
             'request': requestString,
             'action': action
