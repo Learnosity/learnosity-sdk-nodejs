@@ -38,7 +38,10 @@
       2,
       "never"
     ],
-
+    "max-params": [
+      "error",
+      5
+    ],
     "space-unary-ops": [
       2,
       {
