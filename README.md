@@ -203,3 +203,13 @@ An optional string used only if integrating with the Data API. Valid options are
 * set
 * update
 * delete
+
+## Tracking
+In version v0.5.0 we introduced code to track the following information by adding it to the request being signed:
+- SDK version
+- SDK language
+- SDK language version
+- Host platform (OS)
+- Platform version
+
+All subsequent versions of the API shall include this usage tracking.
