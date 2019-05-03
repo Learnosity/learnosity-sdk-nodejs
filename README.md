@@ -212,4 +212,4 @@ In version v0.5.0 we introduced code to track the following information by addin
 - Host platform (OS)
 - Platform version
 
-All subsequent versions of the API shall include this usage tracking.
+We use this data to enable better support and feature planning. All subsequent versions of the SDK shall include this usage tracking.
