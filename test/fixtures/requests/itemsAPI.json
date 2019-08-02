@@ -1,5 +1,5 @@
 {
-    "user_id": "demo_student",
+    "user_id": "$ANONYMIZED_USER_ID",
     "rendering_type": "assess",
     "name": "Items API demo - assess activity demo",
     "state": "initial",
