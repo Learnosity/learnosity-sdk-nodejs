@@ -54,8 +54,8 @@ The init function takes up to 5 arguments:
 ```
 Structure of Node.js project (based on Express.js and EJS template):
 - node_modules
------ ejs 
------ express 
+----- ejs
+----- express
 ----- learnosity-sdk-nodejs
 ----- (all standard modules)
 - views
@@ -78,13 +78,13 @@ app.get('/', function (req, res) {
     var learnositySdk = new Learnosity();
     var request = learnositySdk.init(
         // service type
-        "questions", 
+        "questions",
 
         // security details
         {
             "consumer_key": "yis0TYCu7U9V4o7M",
             "domain":       "localhost",
-            "user_id":      "demo_student"
+            "user_id":      "$ANONYMIZED_USER_ID"
         },
 
         // secret
