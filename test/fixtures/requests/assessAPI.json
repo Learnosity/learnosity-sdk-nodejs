@@ -44,7 +44,7 @@
         "questionsApiVersion": "v2"
     },
     "questionsApiActivity": {
-        "user_id": "demo_student",
+        "user_id": "$ANONYMIZED_USER_ID",
         "type": "submit_practice",
         "state": "initial",
         "id": "assessdemo",

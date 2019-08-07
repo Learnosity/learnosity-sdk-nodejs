@@ -40,7 +40,7 @@ function getSDKParamsFor(service) {
     switch (service) {
         case 'assess':
         case 'questions':
-            params.security.user_id = 'demo_student';
+            params.security.user_id = '$ANONYMIZED_USER_ID';
             break;
         case 'items':
             params.security.user_id = params.request.user_id;
