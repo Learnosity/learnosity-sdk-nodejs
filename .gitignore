@@ -225,3 +225,6 @@ flycheck_*.el
 .projectile### Vagrant template
 .vagrant/
 
+# lock files
+package-lock.json
+yarn.lock
