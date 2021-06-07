@@ -11,7 +11,7 @@
  */
 
 var _ = require('underscore');
-var sha256 = require('crypto-js/sha256');
+const crypto = require('crypto');
 var moment = require('moment');
 var os = require('os');
 var moduleInfo = require('./package.json');
@@ -130,7 +130,10 @@ function generateSignature(
  * @returns string
  */
 function hashSignatureArray(signatureArray) {
-    return sha256(signatureArray.join('_')).toString();
+    const hash = crypto.createHash('sha256');
+
+    hash.update(signatureArray.join('_'));
+    return hash.digest('hex');
 }
 
 /**

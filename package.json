@@ -13,7 +13,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "crypto-js": "^3.1.6",
     "moment": "^2.13.0",
     "underscore": "^1.8.3"
   },
