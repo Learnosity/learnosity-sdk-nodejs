@@ -1,4 +1,4 @@
-# Learnosity SDK - NodeJS
+# Learnosity SDK - Node.js
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/Learnosity/learnosity-sdk-nodejs.svg?label=stable)
 [![Build Status](https://travis-ci.org/Learnosity/learnosity-sdk-nodejs.svg?branch=master)](https://travis-ci.org/Learnosity/learnosity-sdk-nodejs)
@@ -7,6 +7,9 @@
 Include this package into your own codebase to ease integration with the Learnosity APIs.
 
 **Note:** This SDK version only supports signing pre-written requests and does not provide any interface for sending the actual HTTP requests.
+
+## Node Version Support
+The Learnosity SDK - Node.js is verified against [Active LTS and Maintenance LTS releases of Node.js](https://nodejs.org/en/about/releases/).
 
 ## Installation
 
