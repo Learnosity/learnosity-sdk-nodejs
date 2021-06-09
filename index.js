@@ -10,11 +10,11 @@
  *
  */
 
-var _ = require('underscore');
+const _ = require('underscore');
 const crypto = require('crypto');
-var moment = require('moment');
-var os = require('os');
-var moduleInfo = require('./package.json');
+const moment = require('moment');
+const os = require('os');
+const moduleInfo = require('./package.json');
 
 /**
  *  Converts the request packet into an object if it is passed as a string
@@ -30,7 +30,7 @@ function convertRequestPacketToObject(requestPacket) {
     }
 }
 
-var sdkMeta = {
+const sdkMeta = {
     version: 'v' + moduleInfo.version,
     lang: 'node.js',
     lang_version: process.version,
@@ -59,8 +59,8 @@ function addTelemetryData(requestObject) {
  */
 function insertSecurityInformationToAssessObject(requestPacket, securityPacket, secret) {
     if (requestPacket.questionsApiActivity) {
-        var questionsApi = requestPacket.questionsApiActivity;
-        var domain = 'assess.learnosity.com';
+        const questionsApi = requestPacket.questionsApiActivity;
+        let domain = 'assess.learnosity.com';
 
         if (securityPacket.domain) {
             domain = securityPacket.domain;
@@ -97,7 +97,7 @@ function generateSignature(
     requestString,
     action
 ) {
-    var signatureArray = [
+    const signatureArray = [
         securityPacket.consumer_key,
         securityPacket.domain,
         securityPacket.timestamp
@@ -109,7 +109,7 @@ function generateSignature(
     signatureArray.push(secret);
 
     // Add the requestPacket if necessary
-    var signRequestData = !(service === 'assess' || service === 'questions');
+    const signRequestData = !(service === 'assess' || service === 'questions');
 
     if (signRequestData && requestString && requestString.length > 0) {
         signatureArray.push(requestString);
@@ -140,7 +140,7 @@ function hashSignatureArray(signatureArray) {
  * @constructor
  */
 function LearnositySDK() {}
-var telemetryEnabled = true;
+let telemetryEnabled = true;
 
 /**
  * Enables telemetry.
@@ -182,7 +182,7 @@ LearnositySDK.prototype.init = function (
 ) {
     // requestPacket can be passed in as an object or as an already encoded
     // string.
-    var requestObject = convertRequestPacketToObject(requestPacket);
+    const requestObject = convertRequestPacketToObject(requestPacket);
 
     if (telemetryEnabled) {
         addTelemetryData(requestObject);
@@ -206,7 +206,7 @@ LearnositySDK.prototype.init = function (
         }
     }
 
-    var requestString = JSON.stringify(requestObject);
+    const requestString = JSON.stringify(requestObject);
 
     // Generate the signature based on the arguments provided
     securityPacket.signature = generateSignature(
@@ -217,7 +217,7 @@ LearnositySDK.prototype.init = function (
         action
     );
 
-    var output;
+    let output;
 
     if (service === 'data') {
         output = {

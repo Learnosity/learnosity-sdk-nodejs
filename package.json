@@ -10,7 +10,8 @@
   "author": "Learnosity",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "moment": "^2.13.0",
