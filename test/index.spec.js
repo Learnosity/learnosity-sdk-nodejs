@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const LearnositySDK = require('../index');
 const {getSDKParamsFor} = require('./fixtures/requests');
@@ -19,7 +21,7 @@ describe('init function', () => {
             signature: 'e1eae0b86148df69173cb3b824275ea73c9c93967f7d17d6957fcdd299c8a4fe',
             security: '{"consumer_key":"yis0TYCu7U9V4o7M","domain":"localhost","timestamp":"20140626-0528","signature":"e1eae0b86148df69173cb3b824275ea73c9c93967f7d17d6957fcdd299c8a4fe"}',
             request: '{"limit":100}',
-            action: 'get',
+            action: 'get'
         },
         {
             service: 'data',

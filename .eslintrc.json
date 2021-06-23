@@ -1,114 +1,42 @@
 {
   "env": {
+    "es2021": true,
+    "mocha": true,
     "node": true
   },
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
+  "extends": "eslint:recommended",
   "rules": {
-    "no-eval": 2,
-    "dot-notation": 2,
-    "indent": [
-      2,
-      4,
-      {
-        "SwitchCase": 1
-      }
-    ],
-    "curly": [
-      2,
-      "all"
-    ],
-    "guard-for-in": 2,
-    "strict": [
-      2,
-      "global"
-    ],
-    "no-undef": 2,
-    "space-before-function-paren": [
-      2,
-      {"anonymous": "always", "named": "never"}
-    ],
-    "no-empty": 2,
-    "array-bracket-spacing": [
-      2,
-      "never"
-    ],
-    "space-in-parens": [
-      2,
-      "never"
-    ],
-    "max-params": [
+    "array-bracket-spacing": "error",
+    "comma-dangle": ["error", "never"],
+    "comma-style": ["error", "last"],
+    "consistent-this": ["error", "self"],
+    "curly": ["error", "all"],
+    "eol-last": ["error", "always"],
+    "guard-for-in": "error",
+    "indent": ["error", 4, { "SwitchCase": 1 }],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "linebreak-style": ["error", "unix"],
+    "max-params": ["error", 5],
+    "new-cap": ["error", { "newIsCap": true, "capIsNew": true, "properties": true }],
+    "no-eval": "error",
+    "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
+    "no-trailing-spaces": "error",
+    "no-var": "error",
+    "one-var": ["error", { "uninitialized": "always", "initialized": "never" }],
+    "padding-line-between-statements": [
       "error",
-      5
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"]}
     ],
-    "space-unary-ops": [
-      2,
-      {
-        "words": false,
-        "nonwords": false
-      }
-    ],
-    "no-mixed-spaces-and-tabs": 2,
-    "no-trailing-spaces": 2,
-    "comma-dangle": [
-      2,
-      "never"
-    ],
-    "no-with": 2,
-    "no-multiple-empty-lines": [
-      "error",
-      {
-        "max": 2,
-        "maxEOF": 1
-      }
-    ],
-    "space-before-blocks": [
-      2,
-      "always"
-    ],
-    "wrap-iife": ["error", "inside"],
-    "one-var": [
-      2,
-      {
-        "uninitialized": "always",
-        "initialized": "never"
-      }
-    ],
-    "newline-after-var": [
-      2,
-      "always"
-    ],
-    "comma-style": [
-      2,
-      "last"
-    ],
-    "space-infix-ops": 2,
-    "eol-last": 2,
-    "new-cap": 2,
-    "keyword-spacing": [
-      2,
-      {}
-    ],
-    "consistent-this": [
-      2,
-      "self"
-    ],
-    "linebreak-style": [
-      2,
-      "unix"
-    ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "semi": [
-      2,
-      "always"
-    ],
-    "prefer-const": ["error", {
-        "destructuring": "any",
-        "ignoreReadBeforeAssign": false
-    }]
+    "prefer-const": "error",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "space-before-blocks": ["error", "always"],
+    "space-before-function-paren": ["error", { "named": "never" }],
+    "space-in-parens": ["error", "never"],
+    "space-infix-ops": "error",
+    "space-unary-ops": ["error", { "words": false, "nonwords": false }],
+    "strict": ["error", "global"],
+    "wrap-iife": ["error", "inside"]
   }
 }

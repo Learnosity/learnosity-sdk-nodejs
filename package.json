@@ -10,14 +10,15 @@
   "author": "Learnosity",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
-    "crypto-js": "^3.1.6",
     "moment": "^2.13.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "eslint": "^7.28.0",
+    "mocha": "^8.4.0"
   }
 }

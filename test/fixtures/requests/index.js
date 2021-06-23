@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const path = require('path');
 
@@ -12,7 +14,7 @@ function getSecurityObject()
     return {
         consumer_key: 'yis0TYCu7U9V4o7M',
         domain: 'localhost',
-        timestamp: '20140626-0528',
+        timestamp: '20140626-0528'
     };
 }
 
