@@ -48,7 +48,10 @@ There's more features, besides. See the detailed list of SDK features on the [re
 ## Requirements
 1. Runtime libraries for Node.js installed. ([instructions](https://nodejs.org/en/download/))
 
-2. If you're following the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/), a general purpose utility library and [Moment.js](https://momentjs.com/), which provides time and date functions. These are not actually a requirement of the SDK itself, so if your app doesn't use these libraries, no need to install them. They are only required for the tutorial on this page.
+2. To follow the tutorial on this page, also install some other libraries: 
+* [Express.js](http://expressjs.com/), a minimal web framework, 
+* The [EJS](https://ejs.co/) templating language, and 
+* The [UUID](https://www.npmjs.com/package/uuid) library. These are not actually a requirement of the SDK itself, so if your app doesn't use these libraries, no need to install them. They are only required for the tutorial on this page.
 
 Not using Node.js? See the [SDKs for other languages](https://help.learnosity.com/hc/en-us/sections/360000194318-Server-side-development-SDKs).
 
@@ -63,20 +66,26 @@ Using NPM is the recommended way to install the Learnosity SDK for Node.js in pr
 
 	npm install --save-dev https://github.com/Learnosity/learnosity-sdk-nodejs
 
-Then, if you're following the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
+To follow the tutorial on this page, also install some other libraries: 
+* [Express.js](http://expressjs.com/), a minimal web framework, 
+* The [EJS](https://ejs.co/) templating language, and 
+* The [UUID](https://www.npmjs.com/package/uuid) library.
+Install these by running the following commands.
 
-    npm install underscore
-    npm install moment
+    npm install express
+    npm install ejs
+    npm install uuid
 
-*Note*: these libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
+*Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
 ### **Alternative method 1: download the zip file**
 Download the latest version of the SDK as a self-contained ZIP file from the [GitHub Releases](https://github.com/Learnosity/learnosity-sdk-nodejs/releases) page. The distribution ZIP file contains all the necessary dependencies. 
 
-Then, if you're following the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
+Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
 
-    npm install underscore
-    npm install moment
+    npm install express
+    npm install ejs
+    npm install uuid
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
@@ -85,10 +94,11 @@ To install from the terminal, run this command:
 
     git clone git@github.com:Learnosity/learnosity-sdk-nodejs.git
 
-Then, if you're following the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
+Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
 
-    npm install underscore
-    npm install moment
+    npm install express
+    npm install ejs
+    npm install uuid
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
@@ -103,26 +113,20 @@ Let's take a look at a simple example of the SDK in action. In this example, we'
 ### **Start up your web server and view the standalone assessment example**
 To start up your Node.js web server, first find the following folder location under the SDK. Change directory ('cd') to this location on the command line.
 
-If downloaded via another method, navigate to this location:
-
     .../learnosity-sdk-nodejs/docs/quickstart/assessment/
 
-To start, run these commands from that folder:
+To start, run this command from that folder:
 
 ```
-node index.js 
-```
+npm run start-standalone-assessment
 
 ```
-run node.js application: node app.js // What even is this???
-check browser: http://localhost:3000/  // Doesn't work???
-```
 
-From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it's port 8000): 
+From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it is port 3000): 
 
 http://localhost:3000/
 
-The page will load. This is a basic example of an assessment loaded into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
+When you open this URL with your browser, the page will load. This is a basic example of an assessment loaded into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
 
 <img width="50%" height="50%" src="docs/images/image-quickstart-examples-assessment.png">
 
@@ -133,77 +137,73 @@ Let's walk through the code for this standalone assessment example. The source f
 
     .../learnosity-sdk-nodejs/docs/quickstart/assessment/standalone-assessment.js
 
-OR
-
-    .../learnosity-sdk-nodejs/docs/quickstart/assessment/app.js ???
-
 The first section of code is JavaScript and is executed server-side. It constructs a set of configuration options for Items API, and securely signs them using the consumer key. The second section is HTML and JavaScript and is executed client-side, once the page is loaded in the browser. It renders and runs the assessment functionality.
 
 [(Back to top)](#table-of-contents)
 
 ### **Server-side code**
-We start by including some LearnositySDK helpers - they'll make it easy to generate and sign the config options, and unique user and session IDs.
+We start by including the LearnositySDK helper this make it easy to generate and sign the config options.
 
 ``` javascript
-var Learnosity = require('learnosity-sdk-nodejs');
+const Learnosity = require('../../../index'); // Include Learnosity SDK helper
 ```
 
-We also bring in the "Express" library to run a minimal web server, for the purposes of this example.
+We also load some Learnosity variables from [config.js], specifically our consumer key and secret. 
 
 ``` javascript
-var express = require('express'); // Minimal Node.js web server 
-var app = express();
+const config = require('../config'); // Load consumer key & secret
 ```
 
-We have a couple more lines to set up the view engine, and load the Learnosity SDK.
+We also specify a few libraries to run a minimal web server, "Express.js" for the purposes of this example.
 
 ``` javascript
-app.set('view engine', 'ejs'); // Define the view renderer
-app.get('/', function (req, res) { 
-    var learnositySdk = new Learnosity(); // Load Learnosity SDK
+const express = require('express'); // Load 'Express.js", a web server 
+var app = express();              // Instantiate the web server
 ```
 
-// TO DO: Set up the user_id, session_id, and domain configuration according to our best practices.
+We also choose EJS as the view engine, and bring in the UUID library.
+
+``` javascript
+app.set('view engine', 'ejs'); // Set EJS as our templating language
+const uuid = require('uuid');  // Bring in the UUID library
+```
+
+Now we set up the user_id, session_id (both UUID values), and domain configuration.
+
+``` javascript
+user_id = uuid.v4();    // Generate a UUID for the user ID
+session_id = uuid.v4(); // Generate a UUID for the session ID
+domain = 'localhost';   // Set the domain
+```
 
 Now we'll declare the configuration options for Items API. These specify which assessment content should be rendered, how it should be displayed, which user is taking this assessment and how their responses should be stored. 
 
 ``` javascript
-    var request = learnositySdk.init(
-        // service type
-        "questions",
-
-        // security details
+app.get('/', function (req, res) { 
+    const learnositySdk = new Learnosity(); // Instantiate the SDK
+    const request = learnositySdk.init(  // Set Learnosity init options
+        'items',                              // Select Items API
         {
-            "consumer_key": "yis0TYCu7U9V4o7M",
-            "domain":       "localhost",
-            "user_id":      "$ANONYMIZED_USER_ID"
+            consumer_key: config.consumerKey, //Load key from config.js
+            domain: 'localhost',              //Set the domain
         },
-
-        // secret
-        "74c5fd430cf1242a527f6223aebd42d30464be22",
-
-        // request details
+        config.consumerSecret,                //Load secret from config.js
         {
-            "type":       "local_practice",
-            "state":      "initial",
-            "questions":  [
-                {
-                    "response_id":         "60005",
-                    "type":                "association",
-                    "stimulus":            "Match the cities to the parent nation.",
-                    "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
-                    "possible_responses":  ["Australia", "France", "Ireland", "England"],
-                    "validation": {
-                    "score": 1,
-                        "value": ["England", "Ireland", "France", "Australia"]
-                    }
-                }
-            ]
+            type: 'local_practice',
+            state: 'initial',
+            activity_id: 'demo_3',
+            rendering_type: 'assess',
+            session_id: uuid.v4(),
+            items: ['Demo3', 'Demo4'],
+            user_id: 'test_user',
+            config: {
+                regions: 'main'
+            }
         }
     );
 ```
 
-TO DO: port this code above to run Items API. Then feed in all the parameters below. 
+TO DO:  feed in all the parameters below. 
 
 NEW /\
 OLD \/
