@@ -4,7 +4,7 @@
 (Prefer another language? <a href="https://help.learnosity.com/hc/en-us/sections/360000194318-Server-side-development-SDKs">Click here</a>)<br>
 An official Learnosity open-source project.</p>
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/Learnosity/learnosity-sdk-nodejs.svg?label=stable)
+[![Latest Stable Version](https://img.shields.io/github/tag/Learnosity/learnosity-sdk-nodejs.svg?label=stable)](https://github.com/Learnosity/learnosity-sdk-nodejs/releases)
 [![Build Status](https://travis-ci.com/Learnosity/learnosity-sdk-nodejs.svg?branch=master)](https://travis-ci.com/Learnosity/learnosity-sdk-nodejs)
 [![License](docs/images/apache-license.svg)](LICENSE.md)
 [![Downloads](docs/images/downloads.svg)](https://github.com/Learnosity/learnosity-sdk-nodejs/releases)
