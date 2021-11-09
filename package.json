@@ -14,8 +14,8 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
-    "moment": "^2.13.0",
-    "underscore": "^1.8.3"
+    "moment": "^2.29.1",
+    "underscore": "^1.13.1"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
