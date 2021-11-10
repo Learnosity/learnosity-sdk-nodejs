@@ -72,9 +72,11 @@ To follow the tutorial on this page, also install some other libraries:
 * The [UUID](https://www.npmjs.com/package/uuid) library.
 Install these by running the following commands.
 
+```
     npm install express
     npm install ejs
     npm install uuid
+```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
@@ -83,9 +85,11 @@ Download the latest version of the SDK as a self-contained ZIP file from the [Gi
 
 Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
 
+```
     npm install express
     npm install ejs
     npm install uuid
+```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
@@ -96,9 +100,11 @@ To install from the terminal, run this command:
 
 Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
 
+```
     npm install express
     npm install ejs
     npm install uuid
+```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
 
@@ -145,27 +151,29 @@ The first section of code is JavaScript and is executed server-side. It construc
 We start by including the LearnositySDK helper this make it easy to generate and sign the config options.
 
 ``` javascript
-const Learnosity = require('../../../index'); // Include Learnosity SDK helper
+const Learnosity = require('../../../index'); // Learnosity SDK helper
 ```
 
-We also load some Learnosity variables from [config.js], specifically our consumer key and secret. 
+Next, we declare the Learnosity consumer credentials we'll use to authorize this request. We also construct security settings that ensure the report is initialized on the intended domain. The value provided to the domain property must match the domain from which the file is actually served. The consumer key and consumer secret in this example are for Learnosity's public "demos" account (loaded from the [config.js] file). Once Learnosity provides your own consumer credentials, your Item bank and assessment data will be tied to your own consumer key and secret.
 
 ``` javascript
 const config = require('../config'); // Load consumer key & secret
 ```
 
+<i>(of course, you should never normally put passwords into version control)</i>
+
 We also specify a few libraries to run a minimal web server, "Express.js" for the purposes of this example.
 
 ``` javascript
-const express = require('express'); // Load 'Express.js", a web server 
-var app = express();              // Instantiate the web server
+const express = require('express'); // Load Express.js web server 
+var app = express();                // Instantiate the web server
 ```
 
 We also choose EJS as the view engine, and bring in the UUID library.
 
 ``` javascript
-app.set('view engine', 'ejs'); // Set EJS as our templating language
-const uuid = require('uuid');  // Bring in the UUID library
+app.set('view engine', 'ejs'); // Set EJS as the templating language
+const uuid = require('uuid');  // Load the UUID library
 ```
 
 Now we set up the user_id, session_id (both UUID values), and domain configuration.
@@ -176,7 +184,7 @@ session_id = uuid.v4(); // Generate a UUID for the session ID
 domain = 'localhost';   // Set the domain
 ```
 
-Now we'll declare the configuration options for Items API. These specify which assessment content should be rendered, how it should be displayed, which user is taking this assessment and how their responses should be stored. 
+Now we'll declare the Learnosity configuration options for Items API. These specify which assessment content should be rendered, how it should be displayed, which user is taking this assessment and how their responses should be stored. 
 
 ``` javascript
 app.get('/', function (req, res) { 
@@ -184,18 +192,19 @@ app.get('/', function (req, res) {
     const request = learnositySdk.init(  // Set Learnosity init options
         'items',                              // Select Items API
         {
-            consumer_key: config.consumerKey, //Load key from config.js
-            domain: 'localhost',              //Set the domain
+            consumer_key: config.consumerKey,
+            domain: 'localhost',
         },
-        config.consumerSecret,                //Load secret from config.js
+        config.consumerSecret,
         {
-            type: 'local_practice',
-            state: 'initial',
-            activity_id: 'demo_3',
+            user_id: user_id,
+            activity_template_id: 'quickstart_examples_activity_template_001',
+            session_id: session_id,
+            activity_id: "quickstart_examples_activity_001",
             rendering_type: 'assess',
-            session_id: uuid.v4(),
-            items: ['Demo3', 'Demo4'],
-            user_id: 'test_user',
+            type: 'submit_practice',
+            name: "Items API Quickstart",
+            state: 'initial',
             config: {
                 regions: 'main'
             }
@@ -203,249 +212,126 @@ app.get('/', function (req, res) {
     );
 ```
 
-TO DO:  feed in all the parameters below. 
-
-NEW /\
-OLD \/
-
-items_request = items_request = {
-    "user_id": user_id,
-    "session_id": session_id,
-    "activity_template_id": "quickstart_examples_activity_template_001",
-    "activity_id": "quickstart_examples_activity_001",
-    "rendering_type": "assess",
-    "type": "submit_practice",
-    "name": "Items API Quickstart",
-    "state": "initial"
-}
-```
-
 * `user_id`: unique student identifier. Note: we never send or save student's names or other personally identifiable information in these requests. The unique identifier should be used to look up the entry in a database of students accessible within your system only. [Learn more](https://help.learnosity.com/hc/en-us/articles/360002309578-Student-Privacy-and-Personally-Identifiable-Information-PII-).
-* `session_id`: uniquely identifies this specific assessment attempt for save/resume, data retrieval and reporting purposes. Here, we're using the `Uuid` helper to auto-generate a unique session id.
 * `activity_template_id`: reference of the Activity to retrieve from the Item bank. The Activity defines which Items will be served in this assessment.
+* `session_id`: uniquely identifies this specific assessment attempt for save/resume, data retrieval and reporting purposes. Here, we're using the `Uuid` helper to auto-generate a unique session id.
 * `activity_id`: a string you define, used solely for analytics to allow you run reporting and compare results of users submitting the same assessment.
 * `rendering_type`: selects a rendering mode, `assess` mode is a "standalone" mode (loading a complete assessment player for navigation, as opposed to `inline` for embedding without).
 * `type`: selects the context for the student response storage. `submit_practice` mode means the student responses will be stored in the Learnosity cloud, allowing for grading and review.
 * `name`: human-friendly display name to be shown in reporting, via Reports API and Data API.
 * `state`: Optional. Can be set to `initial`, `resume` or `review`. `initial` is the default.
 
-**Note**: you can submit the configuration options either as a Python array as shown above, or a JSON string.
+**Note**: you can submit the configuration options either as an array as shown above, or a JSON string.
 
-Next, we declare the Learnosity consumer credentials we'll use to authorize this request. We also construct security settings that ensure the report is initialized on the intended domain. The value provided to the domain property must match the domain from which the file is actually served. The consumer key and consumer secret in this example are for Learnosity's public "demos" account. Once Learnosity provides your own consumer credentials, your Item bank and assessment data will be tied to your own consumer key and secret.
-
-
-NEW /\
-OLD \/
-
-
-``` python
-security = {
-    'consumer_key': 'yis0TYCu7U9V4o7M',
-    'domain': 'localhost',
-}
-consumerSecret = '74c5fd430cf1242a527f6223aebd42d30464be22'
-```
-
-<i>(of course, you should never normally put passwords into version control)</i>
-
-Now we call LearnositySDK's `Init()` helper to construct our Items API configuration parameters, and sign them securely with the `security`, `request` and `consumerSecret` parameters. `init.generate()` returns us a JSON blob of signed configuration parameters.
-
-``` python
-init = Init(
-    'items', security, consumerSecret,
-    request=items_request
-)
-generatedRequest = init.generate()
-```
+In the example above, we're calling LearnositySDK's `Init()` helper to construct our Items API configuration parameters, and signing them securely.
 
 [(Back to top)](#table-of-contents)
 
+### **Web page content**
+We've got our set of signed configuration parameters, so now we can set up our page content for output. The page can be as simple or as complex as needed, using your own HTML, JavaScript and your frameworks of choice to render the desired product experience.
 
+This example uses HTML in an EJS template, served by the Express.js web server. However, the template used here can be easily modified for use in another framework.
 
-
-
-**Note:** This SDK version only supports signing pre-written requests and does not provide any interface for sending the actual HTTP requests.
-
-## Examples
-You can find a complete site with examples of Learnosity integration in our [demo site](http://demos.learnosity.com/).
-
-You can download the entire site or browse the code directly on [GitHub](https://github.com/Learnosity/learnosity-demos/).
-
-
-## Usage
-
-### Learnosity.init()
-
-
-The init function is used to create the necessary *security* and *request* details used to integrate with a Learnosity API. Most often this will be a JavaScript object.
-
-The init function takes up to 5 arguments:
-
- * [string]  service type
- * [array]   security details (**no secret**)
- * [string]  secret
- * [request] request details *(optional)*
- * [string]  action *(optional)*
-
-```
-Structure of Node.js project (based on Express.js and EJS template):
-- node_modules
------ ejs
------ express
------ learnosity-sdk-nodejs
------ (all standard modules)
-- views
------ index.ejs
-- package.json
-- package-lock.json
-- app.js
-```
-
-``` javascript
-app.js:
-
-var Learnosity = require('learnosity-sdk-nodejs');
-var express = require('express');
-var app = express();
-
-app.set('view engine', 'ejs');
-
-app.get('/', function (req, res) {
-    var learnositySdk = new Learnosity();
-    var request = learnositySdk.init(
-        // service type
-        "questions",
-
-        // security details
-        {
-            "consumer_key": "yis0TYCu7U9V4o7M",
-            "domain":       "localhost",
-            "user_id":      "$ANONYMIZED_USER_ID"
-        },
-
-        // secret
-        "74c5fd430cf1242a527f6223aebd42d30464be22",
-
-        // request details
-        {
-            "type":       "local_practice",
-            "state":      "initial",
-            "questions":  [
-                {
-                    "response_id":         "60005",
-                    "type":                "association",
-                    "stimulus":            "Match the cities to the parent nation.",
-                    "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
-                    "possible_responses":  ["Australia", "France", "Ireland", "England"],
-                    "validation": {
-                    "score": 1,
-                        "value": ["England", "Ireland", "France", "Australia"]
-                    }
-                }
-            ]
-        }
-    );
-
-    res.render("index", { request: request } );
-});
-
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-});
-```
+The following example HTML template can be found in the [standalone-assessment.ejs] file.
 
 ``` html
-index.ejs:
-
-// Pass the object to the initialisation of any Learnosity API, in this example the Questions API
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Learnosity SDK - NodeJS</title>
+    <script src="//items.learnosity.com/?v2021.2.LTS"></script>
 </head>
 <body>
-<span class="learnosity-response question-60005"></span>
-<script src="//questions.learnosity.com/?v2"></script>
+    <h1>Standalone Assessment Example</h1>
+<div id="learnosity_assess"></div>
 <script>
-	var request = <%- JSON.stringify(request) %>
-	console.log(request);
-    var questionsApp = LearnosityApp.init(request);
+    const request = <%- JSON.stringify(request) %>;
+    const itemsApp = LearnosityItems.init(request, {
+        readyListener() {
+            debugger;
+        },
+        errorListener(err) {
+            debugger;
+        }
+    })
 </script>
 </body>
 </html>
 ```
 
-``` json
-package.json:
+The important parts to be aware of in this HTML are:
 
-{
-  "name": "nodeapp",
-  "version": "1.0.0",
-  "description": "Test NodeJS sdk",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "learnosity-sdk-nodejs": "git+https://github.com/Learnosity/learnosity-sdk-nodejs.git#v0.5.0"
-  }
-}
-```
+* A div with `id="learnosity_assess"`. This is where the Learnosity assessment player will be rendered to deliver the assessment.
+* The `<script src="https://items.learnosity.com/?v2021.2.LTS"></script>` tag, which includes Learnosity's Items API on the page and makes the global `LearnosityItems` object available. The version specified as `v2021.2.LTS` will retrieve that specific [Long Term Support (LTS) version](https://help.learnosity.com/hc/en-us/articles/360001268538-Release-Cadence-and-Version-Lifecycle). In production, you should always pin to a specific LTS version to ensure version compatibility.
+* The call to `LearnosityItems.init()`, which initiates Items API to inject the assessment player into the page.
+* The variable `request` dynamically sends the contents of our init options (Learnosity configuration) to JavaScript in the browser, so it can be passed to `init()`.
 
-```
-run node.js application: node app.js
-check browser: http://localhost:3000/
-```
+This marks the end of the quick start guide. From here, try modifying the example files yourself, you are welcome to use this code as a basis for your own projects. As mentioned earlier, the EJS template used here can be easily re-used in another framework.
 
-#### Init() Arguments
-**service**<br>
-A string representing the Learnosity service (API) you want to integrate with. Valid options are:
+Take a look at some more in-depth options and tutorials on using Learnosity assessment functionality below.
 
-* assess
-* author
-* data
-* events
-* items
-* questions
-* reports
+[(Back to top)](#table-of-contents)
 
-**security**<br>
-An array^ that includes your *consumer_key* but does not include your *secret*. The SDK sets defaults for you, but valid options are:
+## Next steps: additional documentation
 
-* consumer_key (mandatory)
-* domain (mandatory)
-* timestamp (optional - the SDK will generate this for you)
-* user_id (optional - not necessary for all APIs)
+### **SDK reference**
+See a more detailed breakdown of all the SDK features, and examples of how to use more advanced or specialised features on the [SDK reference page](REFERENCE.md).
 
-^Note – the SDK accepts a JSON string and native JavaScript objects.
+### **Additional quick start guides**
+There are more quick start guides, going beyond the initial quick start topic of loading an assessment, these further tutorials show how to set up authoring and analytics:
+* [Authoring Items quick start guide](https://help.learnosity.com/hc/en-us/articles/360000754958-Getting-Started-With-the-Author-API) (Author API) - create and edit new Questions and Items for your Item bank, then group your assessment Items into Activities, and
+* [Analytics / student reporting quick start guide](https://help.learnosity.com/hc/en-us/articles/360000755838-Getting-Started-With-the-Reports-API) (Reports API) - view the results and scores from an assessment Activity. 
 
-**secret**<br>
-Your private key, as provided by Learnosity.
+### **Learnosity demos repository**
+On our [demo site](https://demos.learnosity.com/), browse through many examples of Learnosity API integration. You can also download the entire demo site source code, the code for any single demo, or browse the codebase directly on GitHub.
 
-**request**<br>
-An optional associative array^ of data relevant to the API being used. This will be any data minus the security details that you would normally use to initialise an API.
+### **Learnosity reference documentation**
+See full documentation for Learnosity API init options, methods and events in the [Learnosity reference site](https://reference.learnosity.com/).
 
-^Note – the SDK accepts a JSON string and normal JavaScript objects.
+### **Technical use-cases documentation**
+Find guidance on how to select a development pattern and arrange the architecture of your application with Learnosity, in the [Technical Use-Cases Overview](https://help.learnosity.com/hc/en-us/articles/360000757777-Technical-Use-Cases-Overview).
 
-**action**<br>
-An optional string used only if integrating with the Data API. Valid options are:
+### **Deciding what to build or integrate**
+Get help deciding what application functionality to build yourself, or integrate off-the-shelf with the [Learnosity "Golden Path" documentation](https://help.learnosity.com/hc/en-us/articles/360000754578-Recommended-Deployment-Patterns-Golden-Path-).
 
-* get
-* set
-* update
-* delete
+### **Key Learnosity concepts**
+Want more general information about how apps on Learnosity actually work? Take a look at our [Key Learnosity Concepts page](https://help.learnosity.com/hc/en-us/articles/360000754638-Key-Learnosity-Concepts).
 
-## Tracking
-In version v0.5.0 we introduced code to track the following information by adding it to the request being signed:
+### **Glossary**
+Need an explanation for the unique Learnosity meanings for Item, Activity and Item bank? See our [Glossary of Learnosity-specific terms](https://help.learnosity.com/hc/en-us/articles/360000754838-Glossary-of-Learnosity-and-Industry-Terms).
+
+[(Back to top)](#table-of-contents)
+
+## Contributing to this project
+
+### Adding new features or fixing bugs
+Contributions are welcome. See the [contributing instructions](CONTRIBUTING.md) page for more information. You can also get in touch via our support team.
+
+[(Back to top)](#table-of-contents)
+
+## License
+The Learnosity Node.js SDK is licensed under an Apache 2.0 license. [Read more](LICENSE.md).
+
+[(Back to top)](#table-of-contents)
+
+## Usage tracking
+Our SDKs include code to track the following information by adding it to the request being signed:
 - SDK version
 - SDK language
 - SDK language version
 - Host platform (OS)
 - Platform version
 
-We use this data to enable better support and feature planning. All subsequent versions of the SDK shall include this usage tracking.
+We use this data to enable better support and feature planning.
+
+[(Back to top)](#table-of-contents)
+
+## Further reading
+Thanks for reading to the end! Find more information about developing an app with Learnosity on our documentation sites: 
+
+* [help.learnosity.com](http://help.learnosity.com/hc/en-us) -- general help portal and tutorials,
+* [reference.learnosity.com](http://reference.learnosity.com) -- developer reference site, and
+* [authorguide.learnosity.com](http://authorguide.learnosity.com) -- authoring documentation for content creators.
+
+[(Back to top)](#table-of-contents)

@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Learnosity, MIT License
 //
-// Basic example of embedding a standalone assessment using Items API
+// Basic example of loading a standalone assessment in a web page using Items API
 // with `rendering_type: "assess"`.
 
 // Include server side Learnosity SDK, and set up variables related to user access.
@@ -11,39 +11,50 @@ const app = express();               // Instantiate the web server
 app.set('view engine', 'ejs');       // Set EJS as our templating language
 const uuid = require('uuid');        // Load the UUID library
 
-// - - - - - - Section 1: Learnosity server-side configuration - - - - - - //
+// - - - - - - Learnosity server-side configuration - - - - - - //
 
 // Generate the user ID and session ID as UUIDs, set the web server domain.
 user_id = uuid.v4();
 session_id = uuid.v4();
 domain = 'localhost';
 
-app.get('/', function (req, res) {
-    const learnositySdk = new Learnosity();
+app.get('/', function (req, res) { 
+    const learnositySdk = new Learnosity(); // Instantiate the SDK
+    // Items API configuration parameters.
     const request = learnositySdk.init(
-        'items',
+        'items',                              // Select Items API
+        // Consumer key and consumer secret are the public & private security keys required to access Learnosity APIs and data. These keys grant access to Learnosity's public demos account. Learnosity will provide keys for your own account.
         {
-            consumer_key: config.consumerKey,
-            domain: domain,
+            consumer_key: config.consumerKey, // Load key from config.js
+            domain: domain,                   // Set the domain (from line 19)
         },
-        config.consumerSecret,
+        config.consumerSecret,                // Load secret from config.js
         {
-            type: 'local_practice',
-            state: 'initial',
-            activity_id: 'demo_3',
-            rendering_type: 'assess',
-            session_id: session_id,
-            items: ['Demo3', 'Demo4'],
+            // Unique student identifier, a UUID generated on line 17.
             user_id: user_id,
-            config: {
-                regions: 'main'
-            }
+            // A reference of the Activity to retrieve from the Item bank, defining which Items will be served in this assessment.
+            activity_template_id: 'quickstart_examples_activity_template_001',
+            // Selects a rendering mode, `assess` type is a "standalone" mode (loading a complete assessment player for navigation, VS `inline`, for embedded).
+            // Uniquely identifies this specific assessment attempt session for  save/resume, data retrieval and reporting purposes. A UUID generated on line 18.
+            session_id: session_id,
+            // Used in data retrieval and reporting to compare results with other users submitting the same assessment.
+            activity_id: "quickstart_examples_activity_001",
+            // Selects a rendering mode, `assess` type is a "standalone" mode (loading a complete assessment player for navigation, VS `inline`, for embedded).
+            rendering_type: 'assess',
+            // Selects the context for the student response storage `submit_practice` mode means student response storage in the Learnosity cloud, for grading.
+            type: 'submit_practice',
+            // Human-friendly display name to be shown in reporting.
+            name: "Items API Quickstart",
+            // Can be set to `initial, `resume` or `review`. Optional. Default = `initial`.
+            state: 'initial',
         }
     );
 
-    res.render('standalone-assessment', { request });
+    res.render('standalone-assessment', { request }); // Render the page and request.
 });
 
-app.listen(3000, function () {
+app.listen(3000, function () { // Run the web application. Set the port here (3000).
     console.log('Example app listening on port 3000!');
 });
+
+// Note: for further reading, the client-side web page configuration can be found in the EJS template: 'docs/quickstart/views/standalone-assessment.ejs'. //
