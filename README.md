@@ -168,7 +168,7 @@ We start by including the LearnositySDK helper this make it easy to generate and
 const Learnosity = require('../../../index'); // Learnosity SDK helper
 ```
 
-Next, we declare the Learnosity consumer credentials we'll use to authorize this request. We also construct security settings that ensure the report is initialized on the intended domain. The value provided to the domain property must match the domain from which the file is actually served. The consumer key and consumer secret in this example are for Learnosity's public "demos" account (loaded from the [config.js] file). Once Learnosity provides your own consumer credentials, your Item bank and assessment data will be tied to your own consumer key and secret.
+Next, we declare the Learnosity consumer credentials we'll use to authorize this request. We also construct security settings that ensure the report is initialized on the intended domain. The value provided to the domain property must match the domain from which the file is actually served. The consumer key and consumer secret in this example are for Learnosity's public "demos" account (loaded from the [config.js](docs/quickstart/config.js) file). Once Learnosity provides your own consumer credentials, your Item bank and assessment data will be tied to your own consumer key and secret.
 
 ``` javascript
 const config = require('../config'); // Load consumer key & secret
@@ -246,7 +246,7 @@ We've got our set of signed configuration parameters, so now we can set up our p
 
 This example uses HTML in an EJS template, served by the Express.js web server. However, the template used here can be easily modified for use in another framework.
 
-The following example HTML template can be found in the [standalone-assessment.ejs] file.
+The following example HTML template can be found in the [standalone-assessment.ejs](docs/quickstart/views/standalone-assessment.ejs) file.
 
 ``` html
 <!DOCTYPE html>
