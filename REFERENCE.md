@@ -1,10 +1,5 @@
 # Learnosity Node.js-SDK: Reference guide
 
-## Examples
-You can find a complete site with examples of Learnosity integration in our [demo site](http://demos.learnosity.com/).
-
-You can download the entire site or browse the code directly on [GitHub](https://github.com/Learnosity/learnosity-demos/).
-
 ## Usage
 
 ### Learnosity.init()
@@ -183,6 +178,12 @@ In version v0.5.0 we introduced code to track the following information by addin
 - Platform version
 
 We use this data to enable better support and feature planning. All subsequent versions of the SDK shall include this usage tracking.
+
+## Demos
+You can find a complete site with examples of Learnosity integration in our [demo site](http://demos.learnosity.com/).
+
+You can download the entire site or browse the code directly on [GitHub](https://github.com/Learnosity/learnosity-demos/).
+
 
 ## Further reading
 Thanks for reading to the end! Find more information about developing an app with Learnosity on our documentation sites: 
