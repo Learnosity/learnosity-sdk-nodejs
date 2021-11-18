@@ -83,6 +83,12 @@ Install these by running the following commands.
 ### **Alternative method 1: download the zip file**
 Download the latest version of the SDK as a self-contained ZIP file from the [GitHub Releases](https://github.com/Learnosity/learnosity-sdk-nodejs/releases) page. The distribution ZIP file contains all the necessary dependencies. 
 
+One downloaded, run this command from the root folder to install dependencies:
+
+```
+    npm install
+```
+
 To follow the tutorial on this page, also install some other libraries: 
 * [Express.js](http://expressjs.com/), a minimal web framework, 
 * The [EJS](https://ejs.co/) templating language, and 
