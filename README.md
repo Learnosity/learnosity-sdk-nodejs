@@ -237,7 +237,7 @@ app.get('/', function (req, res) {
 
 **Note**: you can submit the configuration options either as an array as shown above, or a JSON string.
 
-In the example above, we're calling LearnositySDK's `Init()` helper to construct our Items API configuration parameters, and signing them securely.
+In the example above, we're calling LearnositySDK's `init()` helper to construct our Items API configuration parameters, and signing them securely.
 
 [(Back to top)](#table-of-contents)
 
