@@ -6,10 +6,11 @@
 // Include server side Learnosity SDK, and set up variables related to user access.
 const Learnosity = require('../../../index'); // Include Learnosity SDK helper
 const config = require('../config'); // Load consumer key & secret from config.js
+const uuid = require('uuid');        // Load the UUID library
 const express = require('express');  // Load 'Express.js", a web server 
 const app = express();               // Instantiate the web server
+
 app.set('view engine', 'ejs');       // Set EJS as our templating language
-const uuid = require('uuid');        // Load the UUID library
 
 // - - - - - - Learnosity server-side configuration - - - - - - //
 
