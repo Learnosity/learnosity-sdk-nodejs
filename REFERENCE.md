@@ -41,39 +41,39 @@ app.get('/', function (req, res) {
     const learnositySdk = new Learnosity();
     const request = learnositySdk.init(
         // service type
-        "questions",
+        'questions',
 
         // security details
         {
-            "consumer_key": "yis0TYCu7U9V4o7M",
-            "domain":       "localhost",
-            "user_id":      "$ANONYMIZED_USER_ID"
+            'consumer_key': 'yis0TYCu7U9V4o7M',
+            'domain':       'localhost',
+            'user_id':      '$ANONYMIZED_USER_ID'
         },
 
         // secret
-        "74c5fd430cf1242a527f6223aebd42d30464be22",
+        '74c5fd430cf1242a527f6223aebd42d30464be22',
 
         // request details
         {
-            "type":       "local_practice",
-            "state":      "initial",
-            "questions":  [
+            'type':       'local_practice',
+            'state':      'initial',
+            'questions':  [
                 {
-                    "response_id":         "60005",
-                    "type":                "association",
-                    "stimulus":            "Match the cities to the parent nation.",
-                    "stimulus_list":       ["London", "Dublin", "Paris", "Sydney"],
-                    "possible_responses":  ["Australia", "France", "Ireland", "England"],
-                    "validation": {
-                    "score": 1,
-                        "value": ["England", "Ireland", "France", "Australia"]
+                    'response_id':         '60005',
+                    'type':                'association',
+                    'stimulus':            'Match the cities to the parent nation.',
+                    'stimulus_list':       ['London', 'Dublin', 'Paris', 'Sydney'],
+                    'possible_responses':  ['Australia', 'France', 'Ireland', 'England'],
+                    'validation': {
+                    'score': 1,
+                        'value': ['England', 'Ireland', 'France', 'Australia']
                     }
                 }
             ]
         }
     );
 
-    res.render("index", { request: request } );
+    res.render('index', { request: request } );
 });
 
 app.listen(3000, function () {
@@ -87,13 +87,13 @@ index.ejs:
 // Pass the object to the initialisation of any Learnosity API, in this example the Questions API
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
+<head lang='en'>
+    <meta charset='UTF-8'>
     <title>Learnosity SDK - NodeJS</title>
 </head>
 <body>
-<span class="learnosity-response question-60005"></span>
-<script src="//questions.learnosity.com/?v2"></script>
+<span class='learnosity-response question-60005'></span>
+<script src='//questions.learnosity.com/?v2'></script>
 <script>
 	const request = <%- JSON.stringify(request) %>
 	console.log(request);
@@ -177,7 +177,7 @@ In version v0.5.0 we introduced code to track the following information by addin
 - Host platform (OS)
 - Platform version
 
-We use this data to enable better support and feature planning. All subsequent versions of the SDK shall include this usage tracking.
+We use this data to enable better support and feature planning.
 
 ## Demos
 You can find a complete site with examples of Learnosity integration in our [demo site](http://demos.learnosity.com/).
