@@ -83,7 +83,11 @@ Install these by running the following commands.
 ### **Alternative method 1: download the zip file**
 Download the latest version of the SDK as a self-contained ZIP file from the [GitHub Releases](https://github.com/Learnosity/learnosity-sdk-nodejs/releases) page. The distribution ZIP file contains all the necessary dependencies. 
 
-Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
+To follow the tutorial on this page, also install some other libraries: 
+* [Express.js](http://expressjs.com/), a minimal web framework, 
+* The [EJS](https://ejs.co/) templating language, and 
+* The [UUID](https://www.npmjs.com/package/uuid) library.
+Install these by running the following commands.
 
 ```
     npm install express
@@ -98,7 +102,11 @@ To install from the terminal, run this command:
 
     git clone git@github.com:Learnosity/learnosity-sdk-nodejs.git
 
-Then, to follow the tutorial on this page, also install other libraries: [Underscore.js](https://underscorejs.org/) and [Moment.js](https://momentjs.com/). Install these by running the following commands.
+To follow the tutorial on this page, also install some other libraries: 
+* [Express.js](http://expressjs.com/), a minimal web framework, 
+* The [EJS](https://ejs.co/) templating language, and 
+* The [UUID](https://www.npmjs.com/package/uuid) library.
+Install these by running the following commands.
 
 ```
     npm install express
