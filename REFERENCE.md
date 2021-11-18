@@ -36,15 +36,15 @@ Structure of Node.js project (based on Express.js and EJS template):
 ``` javascript
 app.js:
 
-var Learnosity = require('learnosity-sdk-nodejs');
-var express = require('express');
-var app = express();
+const Learnosity = require('learnosity-sdk-nodejs');
+const express = require('express');
+const app = express();
 
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-    var learnositySdk = new Learnosity();
-    var request = learnositySdk.init(
+    const learnositySdk = new Learnosity();
+    const request = learnositySdk.init(
         // service type
         "questions",
 
@@ -100,9 +100,9 @@ index.ejs:
 <span class="learnosity-response question-60005"></span>
 <script src="//questions.learnosity.com/?v2"></script>
 <script>
-	var request = <%- JSON.stringify(request) %>
+	const request = <%- JSON.stringify(request) %>
 	console.log(request);
-    var questionsApp = LearnosityApp.init(request);
+    const questionsApp = LearnosityApp.init(request);
 </script>
 </body>
 </html>
