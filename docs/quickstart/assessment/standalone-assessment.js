@@ -15,9 +15,9 @@ app.set('view engine', 'ejs');       // Set EJS as our templating language
 // - - - - - - Learnosity server-side configuration - - - - - - //
 
 // Generate the user ID and session ID as UUIDs, set the web server domain.
-user_id = uuid.v4();
-session_id = uuid.v4();
-domain = 'localhost';
+const user_id = uuid.v4();
+const session_id = uuid.v4();
+const domain = 'localhost';
 
 app.get('/', function (req, res) { 
     const learnositySdk = new Learnosity(); // Instantiate the SDK
