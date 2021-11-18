@@ -9,7 +9,7 @@ The init function is used to create the necessary *security* and *request* detai
 The init function takes up to 5 arguments:
 
  * [string]  service type
- * [array]   security details (**no secret**)
+ * [object]  security details (**no secret**)
  * [string]  secret
  * [request] request details *(optional)*
  * [string]  action *(optional)*
