@@ -31,6 +31,8 @@ Structure of Node.js project (based on Express.js and EJS template):
 ``` javascript
 app.js:
 
+const uuid = require('uuid');
+const user_id = uuid.v4();
 const Learnosity = require('learnosity-sdk-nodejs');
 const express = require('express');
 const app = express();
@@ -47,7 +49,7 @@ app.get('/', function (req, res) {
         {
             'consumer_key': 'yis0TYCu7U9V4o7M',
             'domain':       'localhost',
-            'user_id':      '$ANONYMIZED_USER_ID'
+            'user_id':      user_id
         },
 
         // secret
@@ -142,14 +144,14 @@ A string representing the Learnosity service (API) you want to integrate with. V
 * reports
 
 **security**<br>
-An array^ that includes your *consumer_key* but does not include your *secret*. The SDK sets defaults for you, but valid options are:
+An object^ that includes your *consumer_key* but does not include your *secret*. The SDK sets defaults for you, but valid options are:
 
 * consumer_key (mandatory)
 * domain (mandatory)
 * timestamp (optional - the SDK will generate this for you)
 * user_id (optional - not necessary for all APIs)
 
-^Note – the SDK accepts a JSON string and native JavaScript objects.
+^Note – the security parameter must be an object.
 
 **secret**<br>
 Your private key, as provided by Learnosity.
@@ -157,7 +159,7 @@ Your private key, as provided by Learnosity.
 **request**<br>
 An optional associative array^ of data relevant to the API being used. This will be any data minus the security details that you would normally use to initialise an API.
 
-^Note – the SDK accepts a JSON string and normal JavaScript objects.
+^Note – the SDK accepts a JSON string and normal JavaScript objects. Warning: if you provide an object to this parameter, the object will be modified. 
 
 **action**<br>
 An optional string used only if integrating with the Data API. Valid options are:

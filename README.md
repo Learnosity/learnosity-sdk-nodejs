@@ -64,7 +64,7 @@ The Learnosity SDK - Node.js is verified against [Active LTS and Maintenance LTS
 ###  **Installation via NPM**
 Using NPM is the recommended way to install the Learnosity SDK for Node.js in production. The easiest way is to run this from your parent project folder:
 
-	npm install --save-dev https://github.com/Learnosity/learnosity-sdk-nodejs
+	npm install https://github.com/Learnosity/learnosity-sdk-nodejs
 
 To follow the tutorial on this page, also install some other libraries: 
 * [Express.js](http://expressjs.com/), a minimal web framework, 
@@ -162,10 +162,10 @@ The first section of code is JavaScript and is executed server-side. It construc
 [(Back to top)](#table-of-contents)
 
 ### **Server-side code**
-We start by including the LearnositySDK helper this make it easy to generate and sign the config options.
+We start by including the LearnositySDK constructor. This make it easy to generate and sign the config options.
 
 ``` javascript
-const Learnosity = require('../../../index'); // Learnosity SDK helper
+const Learnosity = require('../../../index'); // Learnosity SDK constructor
 ```
 
 Next, we declare the Learnosity consumer credentials we'll use to authorize this request. We also construct security settings that ensure the report is initialized on the intended domain. The value provided to the domain property must match the domain from which the file is actually served. The consumer key and consumer secret in this example are for Learnosity's public "demos" account (loaded from the [config.js](docs/quickstart/config.js) file). Once Learnosity provides your own consumer credentials, your Item bank and assessment data will be tied to your own consumer key and secret.
@@ -193,9 +193,9 @@ const uuid = require('uuid');  // Load the UUID library
 Now we set up the user_id, session_id (both UUID values), and domain configuration.
 
 ``` javascript
-user_id = uuid.v4();    // Generate a UUID for the user ID
-session_id = uuid.v4(); // Generate a UUID for the session ID
-domain = 'localhost';   // Set the domain
+const user_id = uuid.v4();    // Generate a UUID for the user ID
+const session_id = uuid.v4(); // Generate a UUID for the session ID
+const domain = 'localhost';   // Set the domain
 ```
 
 Now we'll declare the Learnosity configuration options for Items API. These specify which assessment content should be rendered, how it should be displayed, which user is taking this assessment and how their responses should be stored. 

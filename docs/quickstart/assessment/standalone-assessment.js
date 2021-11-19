@@ -2,6 +2,7 @@
 //
 // Basic example of loading a standalone assessment in a web page using Items API
 // with `rendering_type: "assess"`.
+'use strict';
 
 // Include server side Learnosity SDK, and set up variables related to user access.
 const Learnosity = require('../../../index'); // Include Learnosity SDK helper
@@ -27,7 +28,7 @@ app.get('/', function (req, res) {
         // Consumer key and consumer secret are the public & private security keys required to access Learnosity APIs and data. These keys grant access to Learnosity's public demos account. Learnosity will provide keys for your own account.
         {
             consumer_key: config.consumerKey, // Load key from config.js
-            domain: domain,                   // Set the domain (from line 20)
+            domain: domain                   // Set the domain (from line 20)
         },
         config.consumerSecret,                // Load secret from config.js
         {
@@ -47,7 +48,7 @@ app.get('/', function (req, res) {
             // Human-friendly display name to be shown in reporting.
             name: 'Items API Quickstart',
             // Can be set to `initial, `resume` or `review`. Optional. Default = `initial`.
-            state: 'initial',
+            state: 'initial'
         }
     );
 
