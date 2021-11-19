@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Learnosity, MIT License
+// Copyright (c) 2021 Learnosity, Apache 2.0 License
 //
 // Basic example of loading a standalone assessment in a web page using Items API
 // with `rendering_type: "assess"`.
