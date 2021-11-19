@@ -157,7 +157,7 @@ An object^ that includes your *consumer_key* but does not include your *secret*.
 Your private key, as provided by Learnosity.
 
 **request**<br>
-An optional associative array^ of data relevant to the API being used. This will be any data minus the security details that you would normally use to initialise an API.
+Optional data relevant to the API being used. This will be any data minus the security details that you would normally use to initialize an API.
 
 ^Note – the SDK accepts a JSON string and normal JavaScript objects. Warning: if you provide an object to this parameter, the object will be modified. 
 
