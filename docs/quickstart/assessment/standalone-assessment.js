@@ -5,7 +5,7 @@
 'use strict';
 
 // Include server side Learnosity SDK, and set up variables related to user access.
-const Learnosity = require('../../../index'); // Include Learnosity SDK helper
+const Learnosity = require('../../../index'); // Include Learnosity SDK constructor
 const config = require('../config'); // Load consumer key & secret from config.js
 const uuid = require('uuid');        // Load the UUID library
 const express = require('express');  // Load 'Express.js", a web server 
