@@ -176,6 +176,12 @@ const config = require('../config'); // Load consumer key & secret
 
 <i>(of course, you should never normally put passwords into version control)</i>
 
+We bring in the UUID library.
+
+``` javascript
+const uuid = require('uuid');  // Load the UUID library
+```
+
 We also specify a few libraries to run a minimal web server, "Express.js" for the purposes of this example.
 
 ``` javascript
@@ -183,11 +189,10 @@ const express = require('express'); // Load Express.js web server
 var app = express();                // Instantiate the web server
 ```
 
-We also choose EJS as the view engine, and bring in the UUID library.
+We also choose EJS as the view engine, 
 
 ``` javascript
 app.set('view engine', 'ejs'); // Set EJS as the templating language
-const uuid = require('uuid');  // Load the UUID library
 ```
 
 Now we set up the user_id, session_id (both UUID values), and domain configuration.
