@@ -11,7 +11,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "mocha",
-    "lint": "eslint . --fix"
+    "lint": "eslint ."
   },
   "dependencies": {
     "moment": "^2.29.1",
