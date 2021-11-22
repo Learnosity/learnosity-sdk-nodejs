@@ -1,0 +1,17 @@
+{
+  "name": "lrn-node-sdk-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start-standalone-assessment": "npm install && node ./assessment/standalone-assessment.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
