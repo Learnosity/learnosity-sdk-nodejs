@@ -268,10 +268,10 @@ The following example HTML template can be found in the [standalone-assessment.e
     const request = <%- JSON.stringify(request) %>;
     const itemsApp = LearnosityItems.init(request, {
         readyListener() {
-            debugger;
+            console.log('ready');
         },
         errorListener(err) {
-            debugger;
+            console.log('error', err);
         }
     })
 </script>
