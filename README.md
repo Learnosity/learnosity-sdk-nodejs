@@ -70,7 +70,7 @@ To follow the tutorial on this page, also install some other libraries:
 * [Express.js](http://expressjs.com/), a minimal web framework, 
 * The [EJS](https://ejs.co/) templating language, and 
 * The [UUID](https://www.npmjs.com/package/uuid) library.
-Install these by running the following commands.
+Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
@@ -93,7 +93,7 @@ To follow the tutorial on this page, also install some other libraries:
 * [Express.js](http://expressjs.com/), a minimal web framework, 
 * The [EJS](https://ejs.co/) templating language, and 
 * The [UUID](https://www.npmjs.com/package/uuid) library.
-Install these by running the following commands.
+Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
@@ -112,7 +112,7 @@ To follow the tutorial on this page, also install some other libraries:
 * [Express.js](http://expressjs.com/), a minimal web framework, 
 * The [EJS](https://ejs.co/) templating language, and 
 * The [UUID](https://www.npmjs.com/package/uuid) library.
-Install these by running the following commands.
+Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
