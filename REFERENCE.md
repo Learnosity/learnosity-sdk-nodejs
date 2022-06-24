@@ -136,16 +136,18 @@ check browser: http://localhost:3000/
  ## Data API - Example 1:
 
  ``` javascript
-// vanilla node.js example with no dependencies required
+ app.js:
 
+// vanilla node.js example with no dependencies required
 const Learnosity = require('learnosity-sdk-nodejs');
 
 /**
  * 
  * NOTE: 
- * Native node Fetch API (still experimental) need to be enabled, and then the following global functions and classes are made available: fetch(), Request, Response, Headers, FormData
- * To enable you should have node v18 or greater
- * and then run 'node <FILENAME.js> --experimental-fetch' in the terminal to enable
+ * For this example native node Fetch API (still experimental) needs to be enabled, 
+ * and then the following global functions and classes are made available: fetch(), Request, Response, Headers, FormData.
+ * To enable Fetch in node you should use v18 or greater.
+ * run 'node --experimental-fetch' or 'node <FILENAME.js> --experimental-fetch' in the terminal to enable
  */
 
 // instantiate the SDK
@@ -175,8 +177,9 @@ const dataAPIRequest = learnositySdk.init(
 );
 
 const form = new FormData();
-/* Note: the same can be accomplished with using  URLSearchParams  (https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) *
-// const form = newURLSearchParams()
+/* Note: the same can be accomplished with using URLSearchParams 
+(https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) *
+// const form = new URLSearchParams()
 */
 form.append("security", dataAPIRequest.security);
 form.append("request", dataAPIRequest.request);
@@ -212,7 +215,7 @@ run node.js application: node app.js
 check the terminal for the DataAPI response.
 ```
 
-## Data API - Example 2, integration with Express.js
+## Data API - Example 2, integration with Express.js:
 
 ```
 Structure of Node.js project (based on Express.js, Axios, and FormData):
@@ -228,6 +231,8 @@ Structure of Node.js project (based on Express.js, Axios, and FormData):
 ```
 
  ``` javascript
+ app.js:
+
 // require learnosity sdk
 const Learnosity = require('learnosity-sdk-nodejs');
 // 3 other required dependencies for this example: (express, form-data, axios)
@@ -271,9 +276,11 @@ app.get('/learnosity-activities', async (req, res) => {
          'get'
     );
     
-    // use the form data npm package to append the initilization packet to the from object to be used in the axios request below
+    /* use the form-data npm package to append the initilization packet 
+    to the from object to be used in the axios request below */
     const form = new FormData();
-    /* Note: the same can be accomplished with using  URLSearchParams  (https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) *
+    /* Note: the same can be accomplished with using  URLSearchParams  
+    (https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) *
     // const form = newURLSearchParams()
     */
     form.append("security", dataAPIRequest.security);
@@ -281,8 +288,10 @@ app.get('/learnosity-activities', async (req, res) => {
     form.append("action", dataAPIRequest.action);
 
 
-    // now make a POST request to the desired endpoint of Data API using axios, including the form data in the post request  
-    // using 'await' save the successful response to a variable called dataAPIResponse
+    /* Now make a POST request to the desired endpoint of Data API.
+    This example uses axios, and we include the form data in the POST request. */
+
+    // Using 'await' to save the successful response to a variable called dataAPIResponse 
     const dataAPIResponse = await axios.post('https://data.learnosity.com/v2022.1.LTS/itembank/activities', form, {
     headers: form.getHeaders()
   })
