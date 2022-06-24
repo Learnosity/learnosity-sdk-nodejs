@@ -222,8 +222,6 @@ Structure of Node.js project (based on Express.js, Axios, and FormData):
 ----- from-data
 ----- learnosity-sdk-nodejs
 ----- (all standard modules)
-- views
------ index.ejs
 - package.json
 - package-lock.json
 - app.js
