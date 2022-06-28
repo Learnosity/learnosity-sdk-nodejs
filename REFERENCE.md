@@ -143,10 +143,12 @@ const Learnosity = require('learnosity-sdk-nodejs');
 
 /*
  * NOTE: 
- * For this example native node Fetch API (still experimental) needs to be enabled, 
- * and then the following global functions and classes are made available: fetch(), Request, Response, Headers, FormData.
+ * For this example native node Fetch API (still experimental) needs to be 
+ * enabled, and then the following global functions and classes are made 
+ * available: fetch(), Request, Response, Headers, FormData.
  * To enable Fetch in node you should use v18 or greater.
- * Run 'node --experimental-fetch' or 'node <FILENAME.js> --experimental-fetch' in the terminal to enable
+ * Run 'node --experimental-fetch' or 
+ * 'node <FILENAME.js> --experimental-fetch' in the terminal to enable
  */
 
 // Instantiate the SDK
@@ -215,7 +217,7 @@ run node.js application: node app.js
 check the terminal for the DataAPI response.
 ```
 
-## Data API - Example 2, integration with Express.js:
+## Data API - Example 2, integration with Express.js
 
 ```
 Structure of Node.js project (based on Express.js, Axios, and FormData):
@@ -337,7 +339,8 @@ package.json:
 
 ```
 run node.js application: node app.js
-check browser or postman: http://localhost:3000/learnosity-activities to see DataAPI response.
+Check your browser or postman: http://localhost:3000/learnosity-activities to
+see the Data API response.
 ```
 
 #### Init() Arguments
