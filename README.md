@@ -5,7 +5,7 @@
 An official Learnosity open-source project.</p>
 
 [![Latest Stable Version](https://img.shields.io/github/tag/Learnosity/learnosity-sdk-nodejs.svg?label=stable)](https://github.com/Learnosity/learnosity-sdk-nodejs/releases)
-[![Build Status](https://travis-ci.com/Learnosity/learnosity-sdk-nodejs.svg?branch=master)](https://travis-ci.com/Learnosity/learnosity-sdk-nodejs)
+[![Build Status](https://app.travis-ci.com/Learnosity/learnosity-sdk-nodejs.svg?branch=master)](https://app.travis-ci.com/Learnosity/learnosity-sdk-nodejs)
 [![License](docs/images/apache-license.svg)](LICENSE.md)
 [![Downloads](docs/images/downloads.svg)](https://github.com/Learnosity/learnosity-sdk-nodejs/releases)
 ---
