@@ -8,7 +8,7 @@
 const Learnosity = require('../../../index'); // Include Learnosity SDK constructor
 const config = require('../config'); // Load consumer key & secret from config.js
 const uuid = require('uuid');        // Load the UUID library
-const express = require('express');  // Load 'Express.js", a web server 
+const express = require('express');  // Load 'Express.js", a web server
 const app = express();               // Instantiate the web server
 
 app.set('view engine', 'ejs');       // Set EJS as our templating language
@@ -20,7 +20,7 @@ const user_id = uuid.v4();
 const session_id = uuid.v4();
 const domain = 'localhost';
 
-app.get('/', function (req, res) { 
+app.get('/', function (req, res) {
     const learnositySdk = new Learnosity(); // Instantiate the SDK
     // Items API configuration parameters.
     const request = learnositySdk.init(

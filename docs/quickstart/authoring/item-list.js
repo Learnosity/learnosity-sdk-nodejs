@@ -7,7 +7,7 @@
 // Include server side Learnosity SDK, and set up variables related to user access.
 const Learnosity = require('../../../index'); // Include Learnosity SDK constructor
 const config = require('../config'); // Load consumer key & secret from config.js
-const express = require('express');  // Load 'Express.js", a web server 
+const express = require('express');  // Load 'Express.js", a web server
 const app = express();               // Instantiate the web server
 
 app.set('view engine', 'ejs');       // Set EJS as our templating language
@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');       // Set EJS as our templating language
 
 const domain = 'localhost';
 
-app.get('/', function (req, res) { 
+app.get('/', function (req, res) {
     const learnositySdk = new Learnosity(); // Instantiate the SDK
     // Reports API configuration parameters.
     const request = learnositySdk.init(
@@ -31,10 +31,10 @@ app.get('/', function (req, res) {
         config.consumerSecret,                // Load secret from config.js
         // simple api request object for item list view
         {
-            mode: "item_list",
+            mode: 'item_list',
             config: {
                 item_edit: {
-                   item: {
+                    item: {
                         reference: {
                             show: true,
                             edit: true
@@ -42,14 +42,14 @@ app.get('/', function (req, res) {
                         dynamic_content: true,
                         shareed_passage: true,
                         enable_audio_recording: true
-                   }
+                    }
                 }
             },
             user: {
-                id: "demos-site",
-                firstname: "Demos",
-                lastname: "User",
-                email: "demos@learnosity.com"
+                id: 'demos-site',
+                firstname: 'Demos',
+                lastname: 'User',
+                email: 'demos@learnosity.com'
             }
         }
 
