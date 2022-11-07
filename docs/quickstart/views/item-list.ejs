@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - NodeJS</title>
+    <script src="//authorapi.learnosity.com/?v2022.2.LTS"></script>
+</head>
+<body>
+    <h1>Author API Example</h1>
+    <h2>Browse Items in Your Item Bank</h2>
+    <p>
+        The item list mode allows authors to browse and search the Learnosity-hosted item bank for existing items.
+        In this demo, we've enabled creation of new items, but this functionality can be disabled as needed.
+    </p>
+<!-- We create a div element with the id learnosity-author into which the Author API will load -->
+<div id="learnosity-author"></div>
+<script>
+    const request = <%- JSON.stringify(request) %>;
+    const authorApp = LearnosityAuthor.init(request, {
+        readyListener() {
+            console.log('ready');
+        },
+        errorListener(err) {
+            console.log('error', err);
+        }
+    })
+</script>
+</body>
+</html>

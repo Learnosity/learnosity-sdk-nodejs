@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - NodeJS</title>
+    <script src="//reports.learnosity.com/?v2022.2.LTS"></script>
+</head>
+<body>
+    <h1>Reports API Example</h1>
+    <p>
+        This example demonstrates our session-detail-by-item report type, just one of 
+        <a href="https://reference.learnosity.com/reports-api/reporttypes"> 
+            many different report types requestable via Reports API.
+        </a>
+    </p>
+<!-- Here, we make sure to specify a div with the same id we specified for the report in the request object (on line 41) in reports.js -->
+<div id="session-detail"></div>
+<script>
+    const request = <%- JSON.stringify(request) %>;
+    const reportsApp = LearnosityReports.init(request, {
+        readyListener() {
+            console.log('ready');
+        },
+        errorListener(err) {
+            console.log('error', err);
+        }
+    })
+</script>
+</body>
+</html>
