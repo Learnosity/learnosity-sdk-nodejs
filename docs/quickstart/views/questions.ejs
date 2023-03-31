@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - NodeJS</title>
+    <script src="https://questions.learnosity.com/?latest"></script>
+</head>
+<body>
+    <h1>Questions Api example</h1>
+   
+<!-- We create a div element with the id learnosity-response question-60005 into which the questions api will load -->
+<h2>Question 1</h2>
+<span class="learnosity-response question-60005"></span>
+
+<script>
+    const request = <%- JSON.stringify(request) %>;
+    const questionsApp = LearnosityApp.init(request, {
+        readyListener() {
+            console.log('ready');
+        },
+        errorListener(err) {
+            console.log('error', err);
+        }
+    })
+</script>
+</body>
+</html>
