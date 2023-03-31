@@ -259,7 +259,7 @@ The following example HTML template can be found in the [standalone-assessment.e
 <head lang="en">
     <meta charset="UTF-8">
     <title>Learnosity SDK - NodeJS</title>
-    <script src="//items.learnosity.com/?v2021.2.LTS"></script>
+    <script src="//items.learnosity.com/?latest-lts"></script>
 </head>
 <body>
     <h1>Standalone Assessment Example</h1>
@@ -282,7 +282,7 @@ The following example HTML template can be found in the [standalone-assessment.e
 The important parts to be aware of in this HTML are:
 
 * A div with `id="learnosity_assess"`. This is where the Learnosity assessment player will be rendered to deliver the assessment.
-* The `<script src="https://items.learnosity.com/?v2021.2.LTS"></script>` tag, which includes Learnosity's Items API on the page and makes the global `LearnosityItems` object available. The version specified as `v2021.2.LTS` will retrieve that specific [Long Term Support (LTS) version](https://help.learnosity.com/hc/en-us/articles/360001268538-Release-Cadence-and-Version-Lifecycle). In production, you should always pin to a specific LTS version to ensure version compatibility.
+* The `<script src="https://items.learnosity.com/?latest-lts"></script>` tag, which includes Learnosity's Items API on the page and makes the global `LearnosityItems` object available. The version specified as `latest-lts` will retrieve the latest version supported. To know more about switching to a specific LTS version, visit our [Long Term Support (LTS) page](https://help.learnosity.com/hc/en-us/articles/360001268538-Release-Cadence-and-Version-Lifecycle). In production, you should always pin to a specific LTS version to ensure version compatibility.
 * The call to `LearnosityItems.init()`, which initiates Items API to inject the assessment player into the page.
 * The variable `request` dynamically sends the contents of our init options (Learnosity configuration) to JavaScript in the browser, so it can be passed to `init()`.
 
