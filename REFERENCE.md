@@ -123,7 +123,7 @@ package.json:
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "learnosity-sdk-nodejs": "git+https://github.com/Learnosity/learnosity-sdk-nodejs.git#v0.5.0"
+    "learnosity-sdk-nodejs": "git+https://github.com/Learnosity/learnosity-sdk-nodejs.git#v0.5.1"
   }
 }
 ```

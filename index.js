@@ -37,6 +37,7 @@ const sdkMeta = {
     platform: os.platform(),
     platform_version: os.release()
 };
+const signaturePrefix = '$02$';
 
 function addTelemetryData(requestObject) {
     if (requestObject && requestObject.meta) {
@@ -75,9 +76,8 @@ function insertSecurityInformationToAssessObject(requestPacket, securityPacket, 
             securityPacket.consumer_key,
             domain,
             securityPacket.timestamp,
-            securityPacket.user_id,
-            secret
-        ]);
+            securityPacket.user_id
+        ], secret);
     }
 }
 
@@ -106,7 +106,6 @@ function generateSignature(
     if (securityPacket.user_id) {
         signatureArray.push(securityPacket.user_id);
     }
-    signatureArray.push(secret);
 
     // Add the requestPacket if necessary
     const signRequestData = !(service === 'assess' || service === 'questions');
@@ -120,20 +119,22 @@ function generateSignature(
         signatureArray.push(action);
     }
 
-    return hashSignatureArray(signatureArray);
+    return hashSignatureArray(signatureArray, secret);
 }
 
 /**
  * Joins an array (with '_') and hashes it.
  *
  * @param signatureArray array
+ * @param secret
  * @returns string
  */
-function hashSignatureArray(signatureArray) {
-    const hash = crypto.createHash('sha256');
+function hashSignatureArray(signatureArray, secret = null) {
+    // const hash = crypto.createHash('sha256');
+    const hmac = crypto.createHmac('sha256', secret);
 
-    hash.update(signatureArray.join('_'));
-    return hash.digest('hex');
+    hmac.update(signatureArray.join('_'));
+    return signaturePrefix + hmac.digest('hex');
 }
 
 /**
