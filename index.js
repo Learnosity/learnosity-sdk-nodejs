@@ -103,6 +103,10 @@ function generateSignature(
         securityPacket.timestamp
     ];
 
+    if (securityPacket.expires) {
+        signatureArray.push(securityPacket.expires);
+    }
+
     if (securityPacket.user_id) {
         signatureArray.push(securityPacket.user_id);
     }
