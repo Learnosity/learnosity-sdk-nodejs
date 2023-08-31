@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Added support for expiry date in security object.
+
 ## [v0.5.1] - 2023-06-28
 ### Security
 - Upgraded signature to match the security standard.
