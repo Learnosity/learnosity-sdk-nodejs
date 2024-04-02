@@ -3,6 +3,7 @@
   "version": "0.5.2",
   "description": "Learnosity NodeJS SDK",
   "main": "index.js",
+  "types": "index.d.ts",
   "keywords": [
     "learnosity",
     "sdk"
