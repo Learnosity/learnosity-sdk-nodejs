@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - NodeJS</title>
+    <script src="https://authoraide.learnosity.com"></script>
+</head>
+<body>
+    <h1>Standalone Authoraide API Example</h1>
+<!-- We create a div element with the id learnosity-author into which the Authoraide API will load -->
+<div id="aiApp"></div>
+<script>
+    const request = <%- JSON.stringify(request) %>;
+    const authorApp = LearnosityAuthorAide.init(
+                        request,
+                         '#aiApp',
+                         {
+                            readyListener() {
+                                console.log('ready');
+                            },
+                            errorListener(err) {
+                                console.log('error', err);
+                            }
+                        }
+    );
+
+</script>
+</body>
+</html>
