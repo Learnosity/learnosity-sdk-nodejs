@@ -1,7 +1,7 @@
 DOCKER := $(if $(LRN_SDK_NO_DOCKER),,$(shell which docker))
 NODE_VERSION = 20
 
-TARGETS = build test clean test-unit install-deps audit-deps lint lint-fix
+TARGETS = build test clean test-unit install-deps audit-deps lint lint-fix generate-types
 .PHONY: $(TARGETS)
 
 ifneq (,$(DOCKER))
@@ -43,4 +43,7 @@ lint:
 
 lint-fix:
 	npm run lint -- --fix
+
+generate-types:
+	npx tsc
 endif
