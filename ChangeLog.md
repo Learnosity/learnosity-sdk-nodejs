@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.6.0] - 2024-10-25
+### Added
+- Upgraded the Docker container's Node version.
+- Updated the Node versions in Travis CI.
+
 ## [v0.5.3] - 2024-07-12
 ### Added
 - Added support for Authoraide API.
