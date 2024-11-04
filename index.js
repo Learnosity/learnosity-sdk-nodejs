@@ -17,10 +17,45 @@ const os = require('os');
 const moduleInfo = require('./package.json');
 
 /**
+ * @typedef {Object} SecurityPacket
+ * @property {string} consumer_key
+ * @property {string} domain
+ * @property {string} [timestamp]
+ * @property {string} [user_id]
+ * @property {string} [expires]
+ */
+
+/**
+ * @typedef {Object} SDKMeta
+ * @property {string} version
+ * @property {string} lang
+ * @property {string} lang_version
+ * @property {NodeJS.Platform} platform
+ * @property {string} platform_version
+ */
+
+/**
+ * @typedef {Object} RequestMeta
+ * @property {{sdk?: SDKMeta}} [meta]
+ */
+
+/**
+ * @typedef {Record<string, any> & RequestMeta} RequestPacket
+ */
+
+/**
+ * @typedef {'assess' | 'author' | 'items' | 'reports' | 'questions' | 'data'} Service
+ */
+
+/**
+ * @typedef {'get' | 'set' | 'update'} Action
+ */
+
+/**
  *  Converts the request packet into an object if it is passed as a string
  *
- * @param requestPacket
- * @returns object
+ * @param {RequestPacket | string} requestPacket
+ * @returns {RequestPacket}
  */
 function convertRequestPacketToObject(requestPacket) {
     if (_.isString(requestPacket)) {
@@ -30,6 +65,7 @@ function convertRequestPacketToObject(requestPacket) {
     }
 }
 
+/** @type {SDKMeta} */
 const sdkMeta = {
     version: 'v' + moduleInfo.version,
     lang: 'node.js',
@@ -54,9 +90,9 @@ function addTelemetryData(requestObject) {
 /**
  * Insert security information into assess request object
  *
- * @param requestPacket    requestPacket is mutated as a result.
- * @param securityPacket
- * @param secret
+ * @param {RequestPacket} requestPacket - requestPacket is mutated as a result.
+ * @param {SecurityPacket} securityPacket
+ * @param {string} secret
  */
 function insertSecurityInformationToAssessObject(requestPacket, securityPacket, secret) {
     if (requestPacket.questionsApiActivity) {
@@ -84,11 +120,11 @@ function insertSecurityInformationToAssessObject(requestPacket, securityPacket, 
 /**
  * Creates the signature hash.
  *
- * @param service        string
- * @param securityPacket object
- * @param secret         string
- * @param requestString  string
- * @param action         object
+ * @param {string} service
+ * @param {SecurityPacket} securityPacket
+ * @param {string} secret
+ * @param {string} requestString
+ * @param {Action} action
  */
 function generateSignature(
     service,
@@ -129,9 +165,9 @@ function generateSignature(
 /**
  * Joins an array (with '_') and hashes it.
  *
- * @param signatureArray array
- * @param secret
- * @returns string
+ * @param {string[]} signatureArray
+ * @param {string} secret
+ * @returns {string}
  */
 function hashSignatureArray(signatureArray, secret = null) {
     // const hash = crypto.createHash('sha256');
@@ -170,11 +206,11 @@ LearnositySDK.disableTelemetry = function () {
 /**
  * @see https://github.com/Learnosity/learnosity-sdk-nodejs For more information
  *
- * @param service        string
- * @param securityPacket object
- * @param secret         string
- * @param requestPacket  object
- * @param action         object
+ * @param {Service} service
+ * @param {SecurityPacket} securityPacket
+ * @param {string} secret
+ * @param {RequestPacket} requestPacket
+ * @param {Action} [action]
  *
  * @returns object The init options for a Learnosity API
  */
