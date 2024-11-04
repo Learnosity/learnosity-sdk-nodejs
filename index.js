@@ -55,7 +55,7 @@ const moduleInfo = require('./package.json');
  *  Converts the request packet into an object if it is passed as a string
  *
  * @param {RequestPacket | string} requestPacket
- * @returns RequestPacket
+ * @returns {RequestPacket}
  */
 function convertRequestPacketToObject(requestPacket) {
     if (_.isString(requestPacket)) {
