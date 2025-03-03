@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.6.1] - 2025-03-03
+### Security
+- Updated dependencies to address security vulnerabilities.
+
 ## [v0.6.0] - 2024-10-25
 ### Added
 - Upgraded the Docker container's Node version.
