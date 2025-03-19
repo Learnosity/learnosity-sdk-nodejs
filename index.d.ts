@@ -54,5 +54,5 @@ type RequestMeta = {
     };
 };
 type RequestPacket = Record<string, any> & RequestMeta;
-type Service = 'assess' | 'author' | 'items' | 'reports' | 'questions' | 'data';
+type Service = 'assess' | 'author' | 'authoraide' | 'items' | 'reports' | 'questions' | 'data';
 type Action = 'get' | 'set' | 'update';
