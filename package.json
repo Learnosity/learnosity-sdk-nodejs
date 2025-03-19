@@ -1,6 +1,6 @@
 {
   "name": "learnosity-sdk-nodejs",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Learnosity NodeJS SDK",
   "main": "index.js",
   "types": "index.d.ts",
