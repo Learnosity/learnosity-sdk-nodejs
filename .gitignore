@@ -226,5 +226,4 @@ flycheck_*.el
 .vagrant/
 
 # lock files
-package-lock.json
 yarn.lock

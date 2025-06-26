@@ -1,0 +1,28 @@
+meta:
+  owner: itemengine
+  trackingId: 87b2338d-3ea4-45cc-bd63-73d1f4a73a6c
+  system: ngie
+  domain: content
+
+otk:
+  enabled: true
+  build:
+    platform: arm64
+    linuxDistribution: alpine
+    language: node
+    languageVersion: "20"
+
+    publishPackage: true
+    publishPackageDirectories:
+      - ./
+
+  deployConfig:
+    environments:
+      - dev
+
+# catalog:
+
+spartanzBot:
+  fileChecker:
+    enabled: true
+    comment: true
