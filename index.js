@@ -283,4 +283,7 @@ LearnositySDK.prototype.init = function (
     return output;
 };
 
+// Export DataApi class as a property
+LearnositySDK.DataApi = require('./lib/DataApi');
+
 module.exports = LearnositySDK;

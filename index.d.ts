@@ -1,3 +1,5 @@
+import DataApiClass = require('./lib/DataApi');
+
 export = LearnositySDK;
 /**
  * @constructor
@@ -16,6 +18,8 @@ declare class LearnositySDK {
      * @returns object The init options for a Learnosity API
      */
     init(service: Service, securityPacket: SecurityPacket, secret: string, requestPacket: RequestPacket, action?: Action): any;
+
+    static DataApi: typeof DataApiClass;
 }
 declare namespace LearnositySDK {
     export { enableTelemetry, disableTelemetry, SecurityPacket, SDKMeta, RequestMeta, RequestPacket, Service, Action };
