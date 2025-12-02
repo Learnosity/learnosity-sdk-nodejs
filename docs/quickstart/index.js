@@ -199,7 +199,7 @@ app.get('/dataapi', async function (req, res) {
     let demo1_output = [];
 
     try {
-        const data_request = { limit: 1 };
+        let data_request = { limit: 1 };
 
         for (let i = 0; i < 5; i++) {
             const result = await dataApi.request(itembank_uri, security_packet,
