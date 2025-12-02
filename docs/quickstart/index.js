@@ -184,7 +184,7 @@ app.get('/dataapi', async function (req, res) {
 
     // Initialize request metadata (will be populated from first successful request)
     const sdk_version = packageJson.version;
-    let request_metadata = {
+    const request_metadata = {
         endpoint: itembank_uri,
         action: 'get',
         statusCode: null,
@@ -197,8 +197,10 @@ app.get('/dataapi', async function (req, res) {
 
     // Demo 1: Manual iteration (5 items)
     let demo1_output = [];
+
     try {
-        let data_request = { limit: 1 };
+        const data_request = { limit: 1 };
+
         for (let i = 0; i < 5; i++) {
             const result = await dataApi.request(itembank_uri, security_packet,
                 config.consumerSecret, data_request, 'get');
@@ -212,6 +214,7 @@ app.get('/dataapi', async function (req, res) {
 
             if (response.data && response.data.length > 0) {
                 const item = response.data[0];
+
                 demo1_output.push({
                     number: i + 1,
                     reference: item.reference || 'N/A',
@@ -231,9 +234,11 @@ app.get('/dataapi', async function (req, res) {
 
     // Demo 2: Page iteration (5 pages)
     let demo2_output = [];
+
     try {
-        let data_request = { limit: 1 };
+        const data_request = { limit: 1 };
         let page_count = 0;
+
         for await (const page of dataApi.requestIter(itembank_uri, security_packet,
             config.consumerSecret, data_request, 'get')) {
             page_count++;
@@ -264,9 +269,11 @@ app.get('/dataapi', async function (req, res) {
 
     // Demo 3: Results iteration (5 items)
     let demo3_output = [];
+
     try {
-        let data_request = { limit: 1 };
+        const data_request = { limit: 1 };
         let result_count = 0;
+
         for await (const item of dataApi.resultsIter(itembank_uri, security_packet,
             config.consumerSecret, data_request, 'get')) {
             result_count++;

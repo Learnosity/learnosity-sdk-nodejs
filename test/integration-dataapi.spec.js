@@ -125,13 +125,13 @@ describe('DataApi Integration Tests', function () {
 
                 const mockAdapter = async (url, options) => {
                     capturedAction = options.headers['X-Learnosity-Action'];
-                    return {
+                    return ({
                         ok: true,
                         status: 200,
                         statusText: 'OK',
                         json: async () => ({ meta: { status: true }, data: [] }),
                         text: async () => '{}'
-                    };
+                    });
                 };
 
                 const dataApi = new DataApi({ ...config, httpAdapter: mockAdapter });
@@ -166,6 +166,7 @@ describe('DataApi Integration Tests', function () {
                 consumerSecret: 'test',
                 domain: 'test.com'
             });
+
             assert.ok(dataApi instanceof LearnositySDK.DataApi);
         });
     });
