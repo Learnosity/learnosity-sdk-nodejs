@@ -196,7 +196,8 @@ app.get('/dataapi', async function (req, res) {
     };
 
     // Demo 1: Manual iteration (5 items)
-    let demo1_output = [];
+    const demo1_output = [];
+    let demo1_error = null;
 
     try {
         let data_request = { limit: 1 };
@@ -229,11 +230,12 @@ app.get('/dataapi', async function (req, res) {
             }
         }
     } catch (error) {
-        demo1_output = [{ error: error.message }];
+        demo1_error = error.message;
     }
 
     // Demo 2: Page iteration (5 pages)
-    let demo2_output = [];
+    const demo2_output = [];
+    let demo2_error = null;
 
     try {
         const data_request = { limit: 1 };
@@ -264,11 +266,12 @@ app.get('/dataapi', async function (req, res) {
             }
         }
     } catch (error) {
-        demo2_output = [{ error: error.message }];
+        demo2_error = error.message;
     }
 
     // Demo 3: Results iteration (5 items)
-    let demo3_output = [];
+    const demo3_output = [];
+    let demo3_error = null;
 
     try {
         const data_request = { limit: 1 };
@@ -289,15 +292,18 @@ app.get('/dataapi', async function (req, res) {
             }
         }
     } catch (error) {
-        demo3_output = [{ error: error.message }];
+        demo3_error = error.message;
     }
 
     res.render('data-api', {
         name: 'Data API Example - With Metadata Headers',
         request_metadata: request_metadata,
         demo1_output: demo1_output,
+        demo1_error: demo1_error,
         demo2_output: demo2_output,
-        demo3_output: demo3_output
+        demo2_error: demo2_error,
+        demo3_output: demo3_output,
+        demo3_error: demo3_error
     });
 });
 

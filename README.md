@@ -134,20 +134,20 @@ Let's take a look at a simple example of the SDK in action. In this example, we'
 ### **Start up your web server and view the standalone assessment example**
 To start up your Node.js web server, first find the following folder location under the SDK. Change directory ('cd') to this location on the command line.
 
-    .../learnosity-sdk-nodejs/docs/quickstart/assessment/
+    .../learnosity-sdk-nodejs/docs/quickstart/
 
 To start, run this command from that folder:
 
 ```
-npm run start-standalone-assessment
+npm start
 
 ```
 
-From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it is port 3000): 
+From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it is port 8000):
 
-http://localhost:3000/
+http://localhost:8000/
 
-When you open this URL with your browser, the page will load. This is a basic example of an assessment loaded into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
+When you open this URL with your browser, you'll see a menu of interactive examples demonstrating different Learnosity APIs. Click on "Items API" to view the standalone assessment example, which loads an assessment into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
 
 <img width="50%" height="50%" src="docs/images/image-quickstart-examples-assessment.png">
 

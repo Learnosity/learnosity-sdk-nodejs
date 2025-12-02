@@ -212,8 +212,8 @@
     <div class="demo-section">
         <h2>Demo 1: Manual Iteration (5 items)</h2>
         <p>Using <code>request()</code> method with manual pagination via the 'next' pointer.</p>
-        <% if (demo1_output.length > 0 && demo1_output[0].error) { %>
-            <div class="error">Error: <%= demo1_output[0].error %></div>
+        <% if (demo1_error) { %>
+            <div class="error">Error: <%= demo1_error %></div>
         <% } else { %>
             <% demo1_output.forEach(function(item) { %>
                 <div class="item">
@@ -227,8 +227,8 @@
     <div class="demo-section">
         <h2>Demo 2: Page Iteration (5 pages)</h2>
         <p>Using <code>requestIter()</code> method to automatically iterate over pages.</p>
-        <% if (demo2_output.length > 0 && demo2_output[0].error) { %>
-            <div class="error">Error: <%= demo2_output[0].error %></div>
+        <% if (demo2_error) { %>
+            <div class="error">Error: <%= demo2_error %></div>
         <% } else { %>
             <% demo2_output.forEach(function(page) { %>
                 <div class="meta-info">
@@ -247,8 +247,8 @@
     <div class="demo-section">
         <h2>Demo 3: Results Iteration (5 items)</h2>
         <p>Using <code>resultsIter()</code> method to automatically iterate over individual items.</p>
-        <% if (demo3_output.length > 0 && demo3_output[0].error) { %>
-            <div class="error">Error: <%= demo3_output[0].error %></div>
+        <% if (demo3_error) { %>
+            <div class="error">Error: <%= demo3_error %></div>
         <% } else { %>
             <% demo3_output.forEach(function(item) { %>
                 <div class="item">
