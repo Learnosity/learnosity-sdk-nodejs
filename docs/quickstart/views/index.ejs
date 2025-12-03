@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .api-table th,
+        .api-table td {
+            padding: 15px;
+            border: solid 1px #ddd;
+            text-align: left;
+        }
+        .api-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        .api-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .api-table tr:hover {
+            background-color: #e7f3ff;
+        }
+        .api-table a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .api-table a:hover {
+            text-decoration: underline;
+        }
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .instructions code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><%= name %></h1>
+
+        <div class="instructions">
+            <h3>📚 Available Examples</h3>
+            <p>Click on any link below to view a live example of each Learnosity API.</p>
+        </div>
+
+        <table class="api-table">
+            <thead>
+                <tr>
+                    <th>API</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Items API</strong></td>
+                    <td>Standalone assessment example</td>
+                    <td><a href="/itemsapi">View Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Questions API</strong></td>
+                    <td>Inline questions example</td>
+                    <td><a href="/questionsapi">View Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Author API</strong></td>
+                    <td>Item list authoring example</td>
+                    <td><a href="/authorapi">View Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Reports API</strong></td>
+                    <td>Analytics and reporting example</td>
+                    <td><a href="/reportsapi">View Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Author Aide API</strong></td>
+                    <td>AI-powered authoring assistant</td>
+                    <td><a href="/authoraide">View Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Data API</strong></td>
+                    <td>Data retrieval and pagination example</td>
+                    <td><a href="/dataapi">View Demo</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="instructions" style="margin-top: 30px; background: #d1ecf1; border-left-color: #0c5460;">
+            <h3>🔧 Configuration</h3>
+            <p>Make sure to update <code>docs/quickstart/config.js</code> with your Learnosity consumer key and secret before running the examples.</p>
+        </div>
+    </div>
+</body>
+</html>
+

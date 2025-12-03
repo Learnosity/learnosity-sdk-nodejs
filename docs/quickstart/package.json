@@ -10,11 +10,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start-standalone-assessment": "npm install && node ./assessment/standalone-assessment.js",
-    "start-reports": "npm install && node ./analytics/reports.js",
-    "start-item-list": "npm install && node ./authoring/item-list.js",
-    "start-questions": "npm install && node ./questions/questions.js",
-    "start-authoraide": "npm install && node ./authoraide/main.js"
+    "start": "npm install && node ./index.js"
   },
   "author": "",
   "license": "ISC"

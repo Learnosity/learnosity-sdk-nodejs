@@ -16,6 +16,7 @@ An official Learnosity open-source project.</p>
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Quick start guide](#quick-start-guide)
+* [Data API Routing Layer](#data-api-routing-layer)
 * [Next steps: additional documentation](#next-steps-additional-documentation)
 * [Contributing to this project](#contributing-to-this-project)
 * [License](#license)
@@ -29,7 +30,7 @@ The Learnosity Node.js SDK makes it simple to interact with Learnosity APIs.
 
 It provides a number of convenience features for developers, that make it simple to do the following essential tasks:
 * Creating signed security requests for API initialization, and
-* Interacting with the Data API.
+* Interacting with the Data API (now includes a routing layer for making HTTP requests).
 
 For example, the SDK helps with creating a signed request for Learnosity:
 
@@ -133,20 +134,20 @@ Let's take a look at a simple example of the SDK in action. In this example, we'
 ### **Start up your web server and view the standalone assessment example**
 To start up your Node.js web server, first find the following folder location under the SDK. Change directory ('cd') to this location on the command line.
 
-    .../learnosity-sdk-nodejs/docs/quickstart/assessment/
+    .../learnosity-sdk-nodejs/docs/quickstart/
 
 To start, run this command from that folder:
 
 ```
-npm run start-standalone-assessment
+npm start
 
 ```
 
-From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it is port 3000): 
+From this point on, we'll assume that your web server is available at this local address (it will report the port being used when you launch it, by default it is port 8000):
 
-http://localhost:3000/
+http://localhost:8000/
 
-When you open this URL with your browser, the page will load. This is a basic example of an assessment loaded into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
+When you open this URL with your browser, you'll see a menu of interactive examples demonstrating different Learnosity APIs. Click on "Items API" to view the standalone assessment example, which loads an assessment into a web page with Learnosity's assessment player. You can interact with this demo assessment to try out the various Question types.
 
 <img width="50%" height="50%" src="docs/images/image-quickstart-examples-assessment.png">
 
@@ -289,6 +290,51 @@ The important parts to be aware of in this HTML are:
 This marks the end of the quick start guide. From here, try modifying the example files yourself, you are welcome to use this code as a basis for your own projects. As mentioned earlier, the EJS template used here can be easily re-used in another framework.
 
 Take a look at some more in-depth options and tutorials on using Learnosity assessment functionality below.
+
+[(Back to top)](#table-of-contents)
+
+## Data API Routing Layer
+
+The SDK now includes a routing layer for the Data API, making it easy to interact with Learnosity's Data API without manually handling HTTP requests.
+
+### Quick Example
+
+```javascript
+const DataApi = require('learnosity-sdk-nodejs/lib/DataApi');
+
+const dataApi = new DataApi({
+    consumerKey: 'your_consumer_key',
+    consumerSecret: 'your_consumer_secret',
+    domain: 'yourdomain.com'
+});
+
+// Make a request
+const response = await dataApi.request(
+    'https://data.learnosity.com/v2023.1.LTS/itembank/items',
+    { consumer_key: 'xxx', domain: 'example.com' },
+    'secret',
+    { limit: 10 },
+    'get'
+);
+
+const data = await response.json();
+console.log(data);
+
+// Or iterate through all pages automatically
+for await (const page of dataApi.requestIter(endpoint, security, secret, request, 'get')) {
+    console.log(`Page has ${page.data.length} items`);
+}
+```
+
+### Features
+
+- ✅ Automatic request signing
+- ✅ Built-in HTTP client
+- ✅ Pagination support with iterators
+- ✅ Routing metadata headers
+- ✅ Custom HTTP adapter support
+
+See the [Data API documentation](docs/DataApi.md) for complete details and examples.
 
 [(Back to top)](#table-of-contents)
 

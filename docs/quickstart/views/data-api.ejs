@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+        .demo-section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .demo-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        .item-reference {
+            font-family: monospace;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .item-status {
+            color: #666;
+            font-size: 14px;
+        }
+        .meta-info {
+            background: #e7f3ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #0066cc;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #f5c6cb;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+        .note-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .api-responses {
+            margin: 20px 0;
+        }
+        .api-responses h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .request-info {
+            background: #4a90e2;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .request-details {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+        }
+        .request-row {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .request-row:last-child {
+            border-bottom: none;
+        }
+        .request-label {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            font-weight: bold;
+            width: 150px;
+            border-right: 1px solid #dee2e6;
+        }
+        .request-value {
+            padding: 12px 20px;
+            flex: 1;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .request-value.success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .request-value.url {
+            color: #e83e8c;
+        }
+        .request-value.action {
+            color: #e83e8c;
+        }
+        .metadata-headers {
+            background: #5cb85c;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .metadata-note {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            padding: 12px 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .header-row {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            background: white;
+        }
+        .header-row:last-child {
+            border-bottom: none;
+        }
+        .header-name {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            font-weight: bold;
+            width: 250px;
+            border-right: 1px solid #dee2e6;
+            color: #e83e8c;
+        }
+        .header-value {
+            padding: 12px 20px;
+            flex: 1;
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= name %></h1>
+
+    <div class="note-box">
+        <strong>Note:</strong> This example demonstrates the Data API with automatic metadata headers. Every request includes consumer, action, and SDK language-version information.
+    </div>
+
+    <% if (request_metadata) { %>
+    <div class="api-responses">
+        <h2>API Responses</h2>
+
+        <div class="request-info">Request Information</div>
+        <div class="request-details">
+            <div class="request-row">
+                <div class="request-label">Endpoint</div>
+                <div class="request-value url"><%= request_metadata.endpoint %></div>
+            </div>
+            <div class="request-row">
+                <div class="request-label">Action</div>
+                <div class="request-value action"><%= request_metadata.action %></div>
+            </div>
+            <div class="request-row">
+                <div class="request-label">Status Code</div>
+                <div class="request-value success"><%= request_metadata.statusCode || 'N/A' %></div>
+            </div>
+        </div>
+
+        <div class="metadata-headers">Metadata Headers (Sent Automatically)</div>
+        <div class="metadata-note">
+            These headers are added automatically by the SDK and are invisible to customers:
+        </div>
+        <div class="request-details">
+            <div class="header-row">
+                <div class="header-name">X-Learnosity-Consumer</div>
+                <div class="header-value"><%= request_metadata.headers['X-Learnosity-Consumer'] %></div>
+            </div>
+            <div class="header-row">
+                <div class="header-name">X-Learnosity-Action</div>
+                <div class="header-value"><%= request_metadata.headers['X-Learnosity-Action'] %></div>
+            </div>
+            <div class="header-row">
+                <div class="header-name">X-Learnosity-SDK</div>
+                <div class="header-value"><%= request_metadata.headers['X-Learnosity-SDK'] %></div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <div class="demo-section">
+        <h2>Demo 1: Manual Iteration (5 items)</h2>
+        <p>Using <code>request()</code> method with manual pagination via the 'next' pointer.</p>
+        <% if (demo1_error) { %>
+            <div class="error">Error: <%= demo1_error %></div>
+        <% } else { %>
+            <% demo1_output.forEach(function(item) { %>
+                <div class="item">
+                    <div class="item-reference">Item <%= item.number %>: <%= item.reference %></div>
+                    <div class="item-status">Status: <%= item.status %></div>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+
+    <div class="demo-section">
+        <h2>Demo 2: Page Iteration (5 pages)</h2>
+        <p>Using <code>requestIter()</code> method to automatically iterate over pages.</p>
+        <% if (demo2_error) { %>
+            <div class="error">Error: <%= demo2_error %></div>
+        <% } else { %>
+            <% demo2_output.forEach(function(page) { %>
+                <div class="meta-info">
+                    Page <%= page.pageNumber %>: <%= page.itemCount %> items
+                </div>
+                <% page.items.forEach(function(item) { %>
+                    <div class="item">
+                        <div class="item-reference"><%= item.reference %></div>
+                        <div class="item-status">Status: <%= item.status %></div>
+                    </div>
+                <% }); %>
+            <% }); %>
+        <% } %>
+    </div>
+
+    <div class="demo-section">
+        <h2>Demo 3: Results Iteration (5 items)</h2>
+        <p>Using <code>resultsIter()</code> method to automatically iterate over individual items.</p>
+        <% if (demo3_error) { %>
+            <div class="error">Error: <%= demo3_error %></div>
+        <% } else { %>
+            <% demo3_output.forEach(function(item) { %>
+                <div class="item">
+                    <div class="item-reference">Item <%= item.number %>: <%= item.reference %></div>
+                    <div class="item-status">Status: <%= item.status %></div>
+                    <pre><%= item.json %>...</pre>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+
+    <p><a href="/">Back to API Examples</a></p>
+</body>
+</html>
+
