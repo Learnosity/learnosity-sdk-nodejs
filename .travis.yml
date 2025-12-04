@@ -1,7 +1,6 @@
 language: node_js
 dist: focal
 node_js:
-- 18
 - 20
 - 22
 - 23
