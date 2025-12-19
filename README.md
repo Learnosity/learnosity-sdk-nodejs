@@ -49,10 +49,11 @@ There's more features, besides. See the detailed list of SDK features on the [re
 ## Requirements
 1. Runtime libraries for Node.js installed. ([instructions](https://nodejs.org/en/download/))
 
-2. To follow the tutorial on this page, also install some other libraries: 
-* [Express.js](http://expressjs.com/), a minimal web framework, 
-* The [EJS](https://ejs.co/) templating language, and 
-* The [UUID](https://www.npmjs.com/package/uuid) library. These are not actually a requirement of the SDK itself, so if your app doesn't use these libraries, no need to install them. They are only required for the tutorial on this page.
+2. To follow the tutorial on this page, also install some other libraries:
+* [Express.js](http://expressjs.com/), a minimal web framework, and
+* The [EJS](https://ejs.co/) templating language.
+
+These are not actually a requirement of the SDK itself, so if your app doesn't use these libraries, no need to install them. They are only required for the tutorial on this page.
 
 Not using Node.js? See the [SDKs for other languages](https://help.learnosity.com/hc/en-us/sections/360000194318-Server-side-development-SDKs).
 
@@ -67,16 +68,15 @@ Using NPM is the recommended way to install the Learnosity SDK for Node.js in pr
 
 	npm install https://github.com/Learnosity/learnosity-sdk-nodejs
 
-To follow the tutorial on this page, also install some other libraries: 
-* [Express.js](http://expressjs.com/), a minimal web framework, 
-* The [EJS](https://ejs.co/) templating language, and 
-* The [UUID](https://www.npmjs.com/package/uuid) library.
+To follow the tutorial on this page, also install some other libraries:
+* [Express.js](http://expressjs.com/), a minimal web framework, and
+* The [EJS](https://ejs.co/) templating language.
+
 Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
     npm install ejs
-    npm install uuid
 ```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
@@ -90,16 +90,15 @@ One downloaded, run this command from the root folder to install dependencies:
     npm install
 ```
 
-To follow the tutorial on this page, also install some other libraries: 
-* [Express.js](http://expressjs.com/), a minimal web framework, 
-* The [EJS](https://ejs.co/) templating language, and 
-* The [UUID](https://www.npmjs.com/package/uuid) library.
+To follow the tutorial on this page, also install some other libraries:
+* [Express.js](http://expressjs.com/), a minimal web framework, and
+* The [EJS](https://ejs.co/) templating language.
+
 Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
     npm install ejs
-    npm install uuid
 ```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
@@ -109,16 +108,15 @@ To install from the terminal, run this command:
 
     git clone git@github.com:Learnosity/learnosity-sdk-nodejs.git
 
-To follow the tutorial on this page, also install some other libraries: 
-* [Express.js](http://expressjs.com/), a minimal web framework, 
-* The [EJS](https://ejs.co/) templating language, and 
-* The [UUID](https://www.npmjs.com/package/uuid) library.
+To follow the tutorial on this page, also install some other libraries:
+* [Express.js](http://expressjs.com/), a minimal web framework, and
+* The [EJS](https://ejs.co/) templating language.
+
 Install these by running the following commands from the root folder of the project.
 
 ```
     npm install express
     npm install ejs
-    npm install uuid
 ```
 
 *Note*: these additional libraries are not required by the Learnosity SDK. They are only required for the tutorial on this page.
@@ -177,12 +175,6 @@ const config = require('../config'); // Load consumer key & secret
 
 <i>(of course, you should never normally put passwords into version control)</i>
 
-We bring in the UUID library.
-
-``` javascript
-const uuid = require('uuid');  // Load the UUID library
-```
-
 We also specify a few libraries to run a minimal web server, "Express.js" for the purposes of this example.
 
 ``` javascript
@@ -199,9 +191,9 @@ app.set('view engine', 'ejs'); // Set EJS as the templating language
 Now we set up the user_id, session_id (both UUID values), and domain configuration.
 
 ``` javascript
-const user_id = uuid.v4();    // Generate a UUID for the user ID
-const session_id = uuid.v4(); // Generate a UUID for the session ID
-const domain = 'localhost';   // Set the domain
+const user_id = Learnosity.Uuid.generate();    // Generate a UUID for the user ID
+const session_id = Learnosity.Uuid.generate(); // Generate a UUID for the session ID
+const domain = 'localhost';                     // Set the domain
 ```
 
 Now we'll declare the Learnosity configuration options for Items API. These specify which assessment content should be rendered, how it should be displayed, which user is taking this assessment and how their responses should be stored. 
@@ -234,7 +226,7 @@ app.get('/', function (req, res) {
 
 * `user_id`: unique student identifier. Note: we never send or save student's names or other personally identifiable information in these requests. The unique identifier should be used to look up the entry in a database of students accessible within your system only. [Learn more](https://help.learnosity.com/hc/en-us/articles/360002309578-Student-Privacy-and-Personally-Identifiable-Information-PII-).
 * `activity_template_id`: reference of the Activity to retrieve from the Item bank. The Activity defines which Items will be served in this assessment.
-* `session_id`: uniquely identifies this specific assessment attempt for save/resume, data retrieval and reporting purposes. Here, we're using the `Uuid` helper to auto-generate a unique session id.
+* `session_id`: uniquely identifies this specific assessment attempt for save/resume, data retrieval and reporting purposes. Here, we're using the SDK's `Uuid.generate()` helper to auto-generate a unique session id.
 * `activity_id`: a string you define, used solely for analytics to allow you run reporting and compare results of users submitting the same assessment.
 * `rendering_type`: selects a rendering mode, `assess` mode is a "standalone" mode (loading a complete assessment player for navigation, as opposed to `inline` for embedding without).
 * `type`: selects the context for the student response storage. `submit_practice` mode means the student responses will be stored in the Learnosity cloud, allowing for grading and review.

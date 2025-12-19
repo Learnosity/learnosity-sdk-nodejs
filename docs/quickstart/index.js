@@ -6,7 +6,6 @@
 const Learnosity = require('../../index');
 const DataApi = require('../../lib/DataApi');
 const config = require('./config');
-const uuid = require('uuid');
 const express = require('express');
 const packageJson = require('../../package.json');
 const app = express();
@@ -28,8 +27,8 @@ app.get('/', function (req, res) {
 // Items API - Standalone Assessment
 app.get('/itemsapi', function (req, res) {
     const learnositySdk = new Learnosity();
-    const user_id = uuid.v4();
-    const session_id = uuid.v4();
+    const user_id = Learnosity.Uuid.generate();
+    const session_id = Learnosity.Uuid.generate();
 
     const request = learnositySdk.init(
         'items',

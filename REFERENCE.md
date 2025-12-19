@@ -33,9 +33,8 @@ Structure of Node.js project (based on Express.js and EJS template):
 ``` javascript
 app.js:
 
-const uuid = require('uuid');
-const user_id = uuid.v4();
 const Learnosity = require('learnosity-sdk-nodejs');
+const user_id = Learnosity.Uuid.generate();
 const express = require('express');
 const app = express();
 
