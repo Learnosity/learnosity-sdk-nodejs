@@ -1,4 +1,5 @@
 import DataApiClass = require('./lib/DataApi');
+import UuidClass = require('./lib/utils/Uuid');
 
 export = LearnositySDK;
 /**
@@ -20,6 +21,7 @@ declare class LearnositySDK {
     init(service: Service, securityPacket: SecurityPacket, secret: string, requestPacket: RequestPacket, action?: Action): any;
 
     static DataApi: typeof DataApiClass;
+    static Uuid: typeof UuidClass;
 }
 declare namespace LearnositySDK {
     export { enableTelemetry, disableTelemetry, SecurityPacket, SDKMeta, RequestMeta, RequestPacket, Service, Action };

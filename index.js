@@ -286,4 +286,7 @@ LearnositySDK.prototype.init = function (
 // Export DataApi class as a property
 LearnositySDK.DataApi = require('./lib/DataApi');
 
+// Export Uuid utility as a property
+LearnositySDK.Uuid = require('./lib/utils/Uuid');
+
 module.exports = LearnositySDK;
