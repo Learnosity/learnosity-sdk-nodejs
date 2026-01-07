@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.7.0] - 2026-01-07
+### Added
+- Added UUID utility wrapper for generating UUIDs
+- Added Data API support with automatic routing metadata headers
+- Added quickstart examples for Data API usage
+
+### Fixed
+- Updated README with correct port and directory for quickstart examples
+- Optimized error handling in Data API quickstart examples
+
 ## [v0.6.2] - 2025-03-19
 ### Fixed
 - Added missing 'authoraide' service to service type
