@@ -1,5 +1,5 @@
 DOCKER := $(if $(LRN_SDK_NO_DOCKER),,$(shell which docker))
-NODE_VERSION = 20
+NODE_VERSION = 24
 
 TARGETS = build test clean test-unit install-deps audit-deps lint lint-fix generate-types
 .PHONY: $(TARGETS)

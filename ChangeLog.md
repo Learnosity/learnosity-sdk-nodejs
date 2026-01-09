@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.7.0] - 2025-12-03
+### Added
+- Upgraded the Docker container's Node version.
+- Updated the Node versions in Travis CI.
+
 ## [v0.6.2] - 2025-03-19
 ### Fixed
 - Added missing 'authoraide' service to service type
