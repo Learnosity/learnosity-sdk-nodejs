@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.7.1] - 2026-06-02
+### Removed
+- Removed Travis CI configuration and references.
+
 ## [v0.7.0] - 2026-01-07
 ### Added
 - Added UUID utility wrapper for generating UUIDs
