@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [v0.7.1] - 2026-06-25
 ### Fixed
-- Added Events API support to `init()`. The SDK now correctly generates per-user hashes, excludes request data from the signature, and outputs under the `config` key as expected by the Events API client. (LRN-51428)
+- Added Events API support to `init()`. The SDK now correctly generates per-user hashes, excludes request data from the signature, and outputs under the `config` key as expected by the Events API client.
 
 ### Removed
-- Removed Travis CI configuration and references. (LRN-51186)
+- Removed Travis CI configuration and references.
 
 ## [v0.7.0] - 2026-01-07
 ### Added
