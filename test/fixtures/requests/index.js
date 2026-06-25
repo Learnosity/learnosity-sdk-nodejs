@@ -22,6 +22,7 @@ const requestStrings = {
     assess: loadJson('assessAPI'),
     author: loadJson('authorAPI'),
     data: loadJson('dataAPI'),
+    events: loadJson('eventsAPI'),
     items: loadJson('itemsAPI'),
     questions: loadJson('questionsAPI'),
     reports: loadJson('reportsAPI')
@@ -46,6 +47,9 @@ function getSDKParamsFor(service) {
             break;
         case 'items':
             params.security.user_id = params.request.user_id;
+            break;
+        case 'events':
+            params.security.user_id = 'demo-teacher';
             break;
         default:
             // nothing

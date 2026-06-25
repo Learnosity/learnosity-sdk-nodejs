@@ -132,6 +132,91 @@ run node.js application: node app.js
 check browser: http://localhost:3000/
 ```
 
+## Events API Example
+
+``` javascript
+app.js:
+
+const Learnosity = require('learnosity-sdk-nodejs');
+const express = require('express');
+const app = express();
+
+app.set('view engine', 'ejs');
+
+app.get('/', function (req, res) {
+    const learnositySdk = new Learnosity();
+
+    // The Events API request takes an array of user IDs to monitor.
+    // The SDK will generate the per-user authentication hashes automatically.
+    const signedRequest = learnositySdk.init(
+        // service type
+        'events',
+
+        // security details
+        {
+            'consumer_key': 'yis0TYCu7U9V4o7M',
+            'domain':       'localhost',
+            'user_id':      'teacher-001'
+        },
+
+        // secret
+        '74c5fd430cf1242a527f6223aebd42d30464be22',
+
+        // request details - pass user IDs as an array
+        {
+            'users': ['student-001', 'student-002', 'student-003']
+        }
+    );
+
+    res.render('index', { signedRequest: signedRequest });
+});
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
+```
+
+``` html
+index.ejs:
+
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Learnosity SDK - Events API</title>
+</head>
+<body>
+<script src='https://events.learnosity.com/?v2026.2.LTS'></script>
+<script>
+    const signedRequest = <%- JSON.stringify(signedRequest) %>
+
+    const eventsApp = LearnosityEvents.init(signedRequest, {
+        readyListener: function () {
+            console.log('Events API is ready');
+            // Subscribe to events from the users specified in the init
+            const userIds = Object.keys(signedRequest.config.users);
+            const events = userIds.map(function (userId) {
+                return {
+                    kind: 'assess_logging',
+                    user_id: userId,
+                    activity_id: 'my-activity-id'
+                };
+            });
+            eventsApp.on(events, function (event) {
+                console.log('Received event:', event);
+            });
+        },
+        errorListener: function (e) {
+            console.log('Error:', e);
+        }
+    });
+</script>
+</body>
+</html>
+```
+
+**Note:** The SDK output for Events API uses `config` (not `request`) as the top-level key alongside `security`. The per-user hashes are placed in `security.users` automatically — you only need to pass an array of user ID strings in the request.
+
 ## Data API - Example 1
 
  ``` javascript

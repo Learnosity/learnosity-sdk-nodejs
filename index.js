@@ -44,7 +44,7 @@ const moduleInfo = require('./package.json');
  */
 
 /**
- * @typedef {'assess' | 'author' | 'items' | 'reports' | 'questions' | 'data'} Service
+ * @typedef {'assess' | 'author' | 'authoraide' | 'events' | 'items' | 'reports' | 'questions' | 'data'} Service
  */
 
 /**
@@ -148,7 +148,7 @@ function generateSignature(
     }
 
     // Add the requestPacket if necessary
-    const signRequestData = !(service === 'assess' || service === 'questions');
+    const signRequestData = !(service === 'assess' || service === 'questions' || service === 'events');
 
     if (signRequestData && requestString && requestString.length > 0) {
         signatureArray.push(requestString);
@@ -239,11 +239,39 @@ LearnositySDK.prototype.init = function (
     }
 
     // Automatically populate the user_id of the security packet.
-    if (_.contains(['author', 'items', 'reports', 'authoraide'], service)) {
+    if (_.contains(['author', 'items', 'reports', 'authoraide', 'events'], service)) {
         // The Events API requires a user_id, so we make sure it's a part
         // of the security packet as we share the signature in some cases
         if (!securityPacket.user_id && requestObject && requestObject.user_id) {
             securityPacket.user_id = requestObject.user_id;
+        }
+    }
+
+    // For Events API, generate per-user hashes and place them in the security packet.
+    // Each hash is SHA256(user_id + secret). The users field in the request can be
+    // either an array of user ID strings, or an object with user IDs as keys.
+    if (service === 'events' && requestObject && requestObject.users) {
+        const users = requestObject.users;
+        const hashedUsers = {};
+
+        if (Array.isArray(users)) {
+            users.forEach(function (userId) {
+                hashedUsers[userId] = crypto
+                    .createHash('sha256')
+                    .update(userId + secret)
+                    .digest('hex');
+            });
+        } else if (typeof users === 'object') {
+            Object.keys(users).forEach(function (userId) {
+                hashedUsers[userId] = crypto
+                    .createHash('sha256')
+                    .update(userId + secret)
+                    .digest('hex');
+            });
+        }
+
+        if (Object.keys(hashedUsers).length > 0) {
+            securityPacket.users = hashedUsers;
         }
     }
 
@@ -273,6 +301,11 @@ LearnositySDK.prototype.init = function (
         output = _.extend(securityPacket, requestObject);
     } else if (service === 'assess') {
         output = requestObject;
+    } else if (service === 'events') {
+        output = {
+            'security': securityPacket,
+            'config': _.isString(requestPacket) ? requestString : requestObject
+        };
     } else {
         output = {
             'security': securityPacket,
