@@ -271,7 +271,7 @@ LearnositySDK.prototype.init = function (
         }
 
         if (Object.keys(hashedUsers).length > 0) {
-            securityPacket.users = hashedUsers;
+            requestObject.users = hashedUsers;
         }
     }
 

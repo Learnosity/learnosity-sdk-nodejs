@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learnosity SDK - Events API</title>
+    <script src="//items.learnosity.com/?latest-lts"></script>
+    <script src="//events.learnosity.com/?latest-lts"></script>
+</head>
+<body>
+    <h1>Items API + Events API Example</h1>
+    <p>Open the browser console to see Events API output.</p>
+
+    <div id="learnosity_assess"></div>
+
+    <script>
+        const signedRequestItems = <%- JSON.stringify(itemsRequest) %>;
+        const signedRequestEvents = <%- JSON.stringify(eventsRequest) %>;
+
+        console.log('Items API init object:', signedRequestItems);
+        console.log('Events API init object:', signedRequestEvents);
+
+        // Initialize Items API (the assessment)
+        window.itemsApp = LearnosityItems.init(signedRequestItems, {
+            readyListener() {
+                console.log('Items API is successfully initialized');
+            },
+            errorListener(err) {
+                console.log('Items API error:', err);
+            }
+        });
+
+        // Initialize Events API (live proctoring / event monitoring)
+        window.eventsApp = LearnosityEvents.init(signedRequestEvents, {
+            readyListener() {
+                console.log('Events API is successfully initialized');
+
+                // Get user IDs from the signed config
+                const users = signedRequestEvents.config.users;
+                const userIds = Array.isArray(users) ? users : Object.keys(users);
+                console.log('User IDs to monitor:', userIds);
+
+                // Subscribe to assess_logging events for each user
+                const events = userIds.map((user_id) => ({
+                    kind: 'assess_logging',
+                    user_id: user_id,
+                    activity_id: 'quickstart_examples_activity_001'
+                }));
+
+                eventsApp.on(events, (event) => {
+                    console.log('Received Events API event:');
+                    console.dir(event, { depth: null });
+                });
+            },
+            errorListener(error) {
+                console.log('Events API error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

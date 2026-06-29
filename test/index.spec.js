@@ -48,7 +48,7 @@ describe('init function', () => {
         {
             service: 'events',
             signature: '$02$a9ecc64ebf6f33c2069fcd6e1284eb51f9ea52c27661b0f9158509e8625b3374',
-            outputString: '{"security":{"consumer_key":"yis0TYCu7U9V4o7M","domain":"localhost","timestamp":"20140626-0528","user_id":"demo-teacher","users":{"student-001":"48341c9ae4775c8a0cc5ffed8bf99a8ac33be3ce44dfcf03a61cb62dc5935bbc","student-002":"0bd5a3d9a24e16413568795cd79192455fd308328f5ed6b0397f15c8ff23003d"},"signature":"$02$a9ecc64ebf6f33c2069fcd6e1284eb51f9ea52c27661b0f9158509e8625b3374"},"config":{"users":["student-001","student-002"]}}'
+            outputString: '{"security":{"consumer_key":"yis0TYCu7U9V4o7M","domain":"localhost","timestamp":"20140626-0528","user_id":"demo-teacher","signature":"$02$a9ecc64ebf6f33c2069fcd6e1284eb51f9ea52c27661b0f9158509e8625b3374"},"config":{"users":{"student-001":"48341c9ae4775c8a0cc5ffed8bf99a8ac33be3ce44dfcf03a61cb62dc5935bbc","student-002":"0bd5a3d9a24e16413568795cd79192455fd308328f5ed6b0397f15c8ff23003d"}}}'
         }
     ];
 

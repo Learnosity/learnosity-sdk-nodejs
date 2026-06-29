@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.7.2] - 2026-06-26
+### Fixed
+- Fixed Events API user hashes being placed in `security` instead of `config`, which caused 403 errors on event subscriptions.
+
+### Added
+- Added Events API quickstart example.
+
 ## [v0.7.1] - 2026-06-25
 ### Fixed
 - Added Events API support to `init()`. The SDK now correctly generates per-user hashes, excludes request data from the signature, and outputs under the `config` key as expected by the Events API client.

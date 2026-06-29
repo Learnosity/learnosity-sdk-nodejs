@@ -167,6 +167,54 @@ app.get('/authoraide', function (req, res) {
     res.render('main', { request });
 });
 
+// Events API - Live proctoring / event monitoring
+app.get('/eventsapi', function (req, res) {
+    const learnositySdk = new Learnosity();
+    const user_id = 'demo-student-001';
+    const session_id = Learnosity.Uuid.generate();
+
+    // Sign the Items API request (the assessment the student takes)
+    const itemsRequest = learnositySdk.init(
+        'items',
+        {
+            consumer_key: config.consumerKey,
+            domain: domain
+        },
+        config.consumerSecret,
+        {
+            user_id: user_id,
+            activity_template_id: 'quickstart_examples_activity_template_001',
+            session_id: session_id,
+            activity_id: 'quickstart_examples_activity_001',
+            rendering_type: 'assess',
+            type: 'submit_practice',
+            name: 'Items API Quickstart',
+            state: 'initial',
+            config: {
+                configuration: {
+                    events: true
+                }
+            }
+        }
+    );
+
+    // Sign the Events API request (the teacher/proctor monitors events)
+    const eventsRequest = learnositySdk.init(
+        'events',
+        {
+            consumer_key: config.consumerKey,
+            domain: domain,
+            user_id: 'demo-teacher'
+        },
+        config.consumerSecret,
+        {
+            users: [user_id]
+        }
+    );
+
+    res.render('events', { itemsRequest, eventsRequest });
+});
+
 // Data API
 app.get('/dataapi', async function (req, res) {
     const itembank_uri = 'https://data.learnosity.com/latest-lts/itembank/items';
