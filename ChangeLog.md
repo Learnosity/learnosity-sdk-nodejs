@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.7.3] - 2026-10-01
+### Fixed
+- Removed `express` and `ejs` from SDK runtime dependencies. Both packages are only used by the quickstart demo (`docs/quickstart/`), which manages its own dependencies. This prevents Express and its dependency tree from being installed when customers install the SDK.
+
 ## [v0.7.2] - 2026-06-26
 ### Fixed
 - Fixed Events API user hashes being placed in `security` instead of `config`, which caused 403 errors on event subscriptions.
