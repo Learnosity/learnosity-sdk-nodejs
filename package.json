@@ -1,6 +1,6 @@
 {
   "name": "learnosity-sdk-nodejs",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Learnosity NodeJS SDK",
   "main": "index.js",
   "types": "index.d.ts",
@@ -15,8 +15,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.20.0",
     "moment": "^2.29.2",
     "underscore": "^1.13.1",
     "uuid": "^9.0.1"
