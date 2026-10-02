@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [v0.7.3] - 2026-10-01
 ### Fixed
 - Removed `express` and `ejs` from SDK runtime dependencies. Both packages are only used by the quickstart demo (`docs/quickstart/`), which manages its own dependencies. This prevents Express and its dependency tree from being installed when customers install the SDK.
+- Added `.npmignore` to exclude the `docs/` directory from the published npm package.
 
 ## [v0.7.2] - 2026-06-26
 ### Fixed
